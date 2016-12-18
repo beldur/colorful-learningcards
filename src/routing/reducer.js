@@ -1,29 +1,35 @@
 // @flow
 
+import type { Action, ActionHandlers, RouterState } from '../types.js'
 import createBrowserHistory from 'history/createBrowserHistory'
 
 const NAME = 'router'
-const NAVIGATE = `${NAME}/NAVIGATE`
+export const NAVIGATE = `${NAME}/NAVIGATE`
+
 const history = createBrowserHistory()
 
-const initialState = {
+const initialState: RouterState = {
   location: history.location,
   action: history.action,
 }
 
-export default function reducer(state: Object = initialState, action: Object) {
-  switch (action.type) {
-    case NAVIGATE:
-      return {
-        location: action.payload.location,
-        action: action.payload.action,
-      }
-    default:
-      return state
-  }
+const ACTION_HANDLERS: ActionHandlers<RouterState> = {
+  [NAVIGATE]: (state, { location, action }) => ({
+    location: location,
+    action: action,
+  }),
 }
 
-export const navigate = (location: Object, action: string) => ({
+export default function reducer(state: RouterState = initialState, action: Action) {
+  const handler = ACTION_HANDLERS[action.type]
+
+  return handler ? handler(state, action.payload) : state
+}
+
+export const navigate = (pathname: string): Action => ({
   type: NAVIGATE,
-  payload: { location, action }
+  payload: {
+    location: { pathname, search: '', hash: '' },
+    action: 'PUSH'
+  },
 })

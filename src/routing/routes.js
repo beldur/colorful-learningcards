@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Match } from 'react-router'
-import { Home, About, Layout } from '../components/index.js'
+import { Home, About, Layout, Login } from '../components/index.js'
 
 class Routes extends PureComponent {
   render() {
@@ -17,6 +17,10 @@ class Routes extends PureComponent {
         <Match
           pattern='/about'
           component={About}
+        />
+        <Match
+          pattern='/login'
+          component={Login}
         />
       </Layout>
     )

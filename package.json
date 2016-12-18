@@ -1,7 +1,6 @@
 {
   "name": "colorful-learningcards",
   "version": "0.1.0",
-  "private": true,
   "author": {
     "email": "alexluecking@gmail.com",
     "name": "Alexander Lücking"
@@ -21,13 +20,15 @@
     "react-router": "next",
     "react-router-addons-controlled": "^0.0.1",
     "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
     "redux-saga": "^0.13.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+	"deploy": "firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"

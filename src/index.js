@@ -1,40 +1,26 @@
 // @flow
 
+import type { User } from './types.js'
+
 import 'react-hot-loader/patch'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import createStore from './store'
 import Router from './routing/router'
 import Routes from './routing/routes'
-import 'react-mdl/extra/material.css';
-import 'react-mdl/extra/material.js';
+import 'react-mdl/extra/material.css'
+import 'react-mdl/extra/material.js'
+import { firebaseAuth } from './firebase.js'
+import { authStateChanged } from './modules/auth/reducer.js'
 
 import './index.css'
 
-// Initialize Firebase
-const config = {
-  apiKey: "AIzaSyCb0xlBXAYa9mjVlDMC9hSWmyAPntgEAtk",
-  authDomain: "colorful-learningcards.firebaseapp.com",
-  databaseURL: "https://colorful-learningcards.firebaseio.com",
-  storageBucket: "colorful-learningcards.appspot.com",
-  messagingSenderId: "377302876686"
-}
-const firebaseApp = firebase.initializeApp(config)
-console.log(firebaseApp);
+const store = createStore()
 
-console.log(firebase.auth().currentUser)
-firebase.auth().onAuthStateChanged(user => {
-
-});
-
-const store = createStore({
-  auth: { authenticated: true }
-})
+firebaseAuth.onAuthStateChanged((user?: User) => store.dispatch(authStateChanged(user)))
 
 const render = (Routes) => {
   ReactDOM.render(
