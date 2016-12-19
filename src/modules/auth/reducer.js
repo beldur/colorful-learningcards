@@ -31,7 +31,7 @@ export default function reducer(state: AuthState = initialState, action: Action)
   return handler ? handler(state, action.payload) : state
 }
 
-export const authStateChanged = (user?: User): Action => ({
+export const stateChanged = (user?: User): Action => ({
   type: STATE_CHANGED,
   payload: { user },
 })

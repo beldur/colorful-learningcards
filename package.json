@@ -6,7 +6,7 @@
     "name": "Alexander Lücking"
   },
   "devDependencies": {
-    "flow-bin": "^0.36.0",
+    "flow-bin": "^0.37.0",
     "react-hot-loader": "next",
     "react-scripts": "0.8.4"
   },
@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-	"deploy": "firebase deploy --only hosting"
+    "deploy": "firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -14,13 +14,13 @@ import Routes from './routing/routes'
 import 'react-mdl/extra/material.css'
 import 'react-mdl/extra/material.js'
 import { firebaseAuth } from './firebase.js'
-import { authStateChanged } from './modules/auth/reducer.js'
+import { stateChanged } from './modules/auth/reducer.js'
 
 import './index.css'
 
 const store = createStore()
 
-firebaseAuth.onAuthStateChanged((user?: User) => store.dispatch(authStateChanged(user)))
+firebaseAuth.onAuthStateChanged((user?: User) => store.dispatch(stateChanged(user)))
 
 const render = (Routes) => {
   ReactDOM.render(

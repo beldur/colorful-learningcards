@@ -19,7 +19,7 @@ class Login extends PureComponent {
   render () {
     return (
       <div>
-        <h2>Login</h2>
+        <h4>Login</h4>
         <div ref={c => this.firebaseUiElement = c}></div>
       </div>
     )

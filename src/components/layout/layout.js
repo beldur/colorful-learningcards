@@ -39,8 +39,8 @@ class Layout extends PureComponent {
             />
           ) : null}
         </Header>
-        <Content>
-          <Grid className="page-content" noSpacing>
+        <Content className="mdl-color--grey-100 mdl-color-text--grey-700">
+          <Grid className="page-content">
             <Cell col={12}>
               {children}
             </Cell>
