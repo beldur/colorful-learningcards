@@ -6,7 +6,7 @@ class About extends PureComponent {
   render () {
     return (
       <div>
-        About
+        <h4>About</h4>
       </div>
     )
   }
