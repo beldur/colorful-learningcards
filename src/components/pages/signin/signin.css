@@ -1,0 +1,6 @@
+.mdl-layout .signin-card {
+	margin: auto;
+	min-height: 0;
+	height: auto;
+	width: 360px;
+}

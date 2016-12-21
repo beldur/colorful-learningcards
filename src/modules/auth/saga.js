@@ -12,14 +12,14 @@ export function* authFlow() {
 
   if (logoutRequested) {
     try {
-      yield apply(firebaseAuth, firebaseAuth.signOut);
+      yield apply(firebaseAuth, firebaseAuth.signOut)
       yield put(actions.logoutSuccess())
       yield put(navigate('/'))
     } catch(error) {
       yield put(actions.logoutFailed(error))
     }
   } else if (loginSuccess) {
-      yield put(navigate('/'))
+      yield put(navigate('/cards'))
   }
 }
 

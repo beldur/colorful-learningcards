@@ -18,3 +18,11 @@
 	width: 36px;
 	cursor: pointer;
 }
+
+.mdl-layout .mdl-layout__tab-bar-container {
+	display: none;
+}
+
+.authenticated .mdl-layout__tab-bar-container {
+	display: flex;
+}

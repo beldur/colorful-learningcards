@@ -17,11 +17,11 @@ const startAuth = () => {
 }
 
 describe('auth/saga', () => {
-  it('should navigate to / after successful login', () => {
+  it('should navigate to /cards after successful login', () => {
     const flow = startAuth()
 
     expect(flow.next({ loginSuccess: true }).value).toEqual(
-      put(navigate('/')),
+      put(navigate('/cards')),
     )
   })
 

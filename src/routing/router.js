@@ -1,21 +1,30 @@
-import React, { PureComponent, PropTypes } from 'react'
+// @flow
+
+import type { Location } from '../types.js'
+
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import BrowserRouter from 'react-router-addons-controlled/ControlledBrowserRouter'
 import { NAVIGATE } from './reducer'
+import { getLocation } from './selectors.js'
+
+type RouterProps = {
+  location: Location,
+  action: string,
+  children: any,
+  dispatch: () => void,
+}
 
 const history = createBrowserHistory()
 
 class Router extends PureComponent {
+  props: RouterProps
+
   constructor(props) {
     super(props)
 
     this.handleRouterChange = this.handleRouterChange.bind(this)
-  }
-
-  static propTypes = {
-    location: PropTypes.object,
-    action: PropTypes.string,
   }
 
   handleRouterChange(location, action) {
@@ -46,6 +55,6 @@ class Router extends PureComponent {
 }
 
 export default connect(state => ({
-  location: state.router.location,
+  location: getLocation(state),
   action: state.router.action,
 }))(Router)

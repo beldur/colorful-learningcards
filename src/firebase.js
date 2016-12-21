@@ -22,7 +22,7 @@ export const authUIConfig = {
 
 export const firebaseAuth = firebase.auth()
 
-const authUI = new firebaseui.auth.AuthUI(firebaseAuth);
+const authUI = new firebaseui.auth.AuthUI(firebaseAuth)
 
 export const firebaseAuthUI = (element: HTMLElement, signInSuccess: () => void) => {
   authUI.start(element, {

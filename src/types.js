@@ -28,8 +28,13 @@ export type ActionHandlers<T> = {
 
 // State
 
+export type Location = {
+  pathname: string,
+  search: string,
+}
+
 export type RouterState = {
-  location: Object,
+  location: Location,
   action: string,
 }
 
