@@ -29,7 +29,7 @@ export default function reducer(state: RouterState = initialState, action: Actio
 export const navigate = (pathname: string): Action => ({
   type: NAVIGATE,
   payload: {
-    location: { pathname, search: '', hash: '' },
+    location: { pathname, search: '', hash: '', query: null },
     action: 'PUSH'
   },
 })

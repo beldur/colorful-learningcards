@@ -8,6 +8,7 @@ describe('routing/reducer', () => {
         pathname: '/test',
         search: '',
         hash: '',
+        query: null,
       },
       action: 'PUSH'
     })

@@ -1,16 +1,18 @@
 import { takeLatest } from 'redux-saga'
-import { take, put, apply, race } from 'redux-saga/effects'
+import { take, put, apply } from 'redux-saga/effects'
 import { firebaseAuth } from '../../firebase.js'
 import { navigate } from '../../routing/reducer.js'
 import * as actions from './reducer.js'
 
-export function* authFlow() {
-  const { loginSuccess, logoutRequested } = yield race({
-    loginSuccess: take(actions.LOGIN_SUCCESS),
-    logoutRequested: take(actions.LOGOUT_REQUESTED),
-  })
+export function* authFlow({ payload }) {
+  const { user } = payload;
 
-  if (logoutRequested) {
+  if (user !== null) {
+    yield put(actions.loginSuccess())
+    yield put(navigate('/learn'))
+
+    yield take(actions.LOGOUT_REQUESTED)
+
     try {
       yield apply(firebaseAuth, firebaseAuth.signOut)
       yield put(actions.logoutSuccess())
@@ -18,8 +20,6 @@ export function* authFlow() {
     } catch(error) {
       yield put(actions.logoutFailed(error))
     }
-  } else if (loginSuccess) {
-      yield put(navigate('/cards'))
   }
 }
 

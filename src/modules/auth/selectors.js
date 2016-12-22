@@ -1,5 +1,13 @@
 // @flow
 
-import type { AppState, AuthState } from '../../types.js'
+import type { AppState, AuthState, User } from '../../types.js'
 
 export const getAuth = (state: AppState): AuthState => state.auth
+
+export const isAuthenticated = (state: AppState): boolean => {
+  const auth = getAuth(state)
+
+  return auth.authenticated && auth.user !== null
+}
+
+export const getUserPhoto = (user: ?User) => user ? user.photoURL : undefined

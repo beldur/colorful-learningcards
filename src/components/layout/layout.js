@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Layout as MdlLayout, Header, Content, Navigation, HeaderRow, Tab,
   Grid, Cell, Footer, FooterSection, FooterLinkList } from 'react-mdl'
-import { getAuth } from '../../modules/auth/selectors.js'
+import { getAuth, getUserPhoto, isAuthenticated } from '../../modules/auth/selectors.js'
 import { getLocation } from '../../routing/selectors.js'
 import { logout } from '../../modules/auth/reducer.js'
 import RoutedHeaderTabs from './routed-header-tabs.js'
@@ -15,6 +15,7 @@ import './layout.css'
 
 type LayoutProps = {
   auth: AuthState,
+  isAuthenticated: boolean,
   children: any,
   logout: () => void,
   location: Location,
@@ -24,19 +25,19 @@ class Layout extends Component {
   props: LayoutProps
 
   render () {
-    const { children, auth, logout, location } = this.props
+    const { children, isAuthenticated, logout, location, auth } = this.props
     const titleLink = <Link to="/" className="home-link">Colorful Learningcards</Link>
 
     return (
-      <MdlLayout fixedHeader fixedTabs className={`${auth.authenticated ? 'authenticated' : ''}`}>
-        <Header>
+      <MdlLayout fixedHeader fixedTabs>
+        <Header className={`${isAuthenticated ? 'authenticated' : ''}`}>
           <HeaderRow title={titleLink}>
             <Navigation>
-              {!auth.authenticated ? (<Link to="/signin">SIGN IN</Link>) : null}
+              {!isAuthenticated ? (<Link to="/signin">SIGN IN</Link>) : null}
             </Navigation>
-            {auth.authenticated && auth.user != null ? (
+            {isAuthenticated ? (
               <img
-                src={auth.user.photoURL}
+                src={getUserPhoto(auth.user)}
                 role="presentation"
                 className="user-image"
                 onClick={logout}
@@ -70,6 +71,7 @@ class Layout extends Component {
 
 export default connect(state => ({
   auth: getAuth(state),
+  isAuthenticated: isAuthenticated(state),
   location: getLocation(state),
 }), {
   logout,

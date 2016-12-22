@@ -24,14 +24,11 @@ export const firebaseAuth = firebase.auth()
 
 const authUI = new firebaseui.auth.AuthUI(firebaseAuth)
 
-export const firebaseAuthUI = (element: HTMLElement, signInSuccess: () => void) => {
+export const firebaseAuthUI = (element: HTMLElement) => {
   authUI.start(element, {
     ...authUIConfig,
     callbacks: {
-      signInSuccess: () => {
-        signInSuccess()
-        return false
-      },
+      signInSuccess: () => false,
     },
   })
 }
