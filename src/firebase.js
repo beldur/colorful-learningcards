@@ -1,5 +1,7 @@
 // @flow
 
+import type { User } from './types'
+
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import firebaseui from 'firebaseui'
@@ -24,11 +26,14 @@ export const firebaseAuth = firebase.auth()
 
 const authUI = new firebaseui.auth.AuthUI(firebaseAuth)
 
-export const firebaseAuthUI = (element: HTMLElement) => {
+export const firebaseAuthUI = (element: HTMLElement, signInSuccess: (user: User) => void) => {
   authUI.start(element, {
     ...authUIConfig,
     callbacks: {
-      signInSuccess: () => false,
+      signInSuccess: (user) => {
+        signInSuccess(user)
+        return false
+      },
     },
   })
 }

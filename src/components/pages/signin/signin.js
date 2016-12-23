@@ -1,8 +1,10 @@
 // @flow
 
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import { Card, CardText } from 'react-mdl'
 import { firebaseAuthUI } from '../../../firebase.js'
+import { loginSuccess } from '../../../modules/auth/reducer.js'
 import './signin.css'
 import 'firebaseui/dist/firebaseui.css'
 
@@ -10,7 +12,9 @@ class SignIn extends PureComponent {
   firebaseUiElement: HTMLElement
 
   componentDidMount() {
-    firebaseAuthUI(this.firebaseUiElement)
+    const { loginSuccess } = this.props
+
+    firebaseAuthUI(this.firebaseUiElement, user => loginSuccess(user))
   }
 
   render () {
@@ -27,4 +31,6 @@ class SignIn extends PureComponent {
   }
 }
 
-export default SignIn
+export default connect(state => ({ }), {
+  loginSuccess,
+})(SignIn)

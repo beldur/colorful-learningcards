@@ -19,6 +19,10 @@ const ACTION_HANDLERS: ActionHandlers<AuthState> = {
     authenticated: !!user,
     user: user || null,
   }),
+  [LOGIN_SUCCESS]: (state, { user }) => ({
+    authenticated: !!user,
+    user: user || null,
+  }),
   [LOGOUT_SUCCESS]: (state) => ({
     authenticated: false,
     user: null,
