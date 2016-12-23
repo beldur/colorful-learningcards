@@ -26,7 +26,7 @@ const ACTION_HANDLERS: ActionHandlers<AuthState> = {
 }
 
 export default function reducer(state: AuthState = initialState, action: Action) {
-  const handler = ACTION_HANDLERS[action.type]
+  const handler = action && ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action.payload) : state
 }

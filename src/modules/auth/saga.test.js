@@ -37,10 +37,19 @@ describe('auth/saga', () => {
     )
   })
 
-  xit('should handle logout failure', () => {
+  it('should handle logout failure', () => {
     const flow = authFlow(actions.stateChanged({ }))
+    const error = 'error';
 
     untilLogoutRequest(flow)
 
+    expect(flow.next().value).toEqual(
+      apply(firebaseAuth, firebaseAuth.signOut),
+    )
+
+    // Throw exception
+    expect(flow.throw(error).value).toEqual(
+      put(actions.logoutFailed(error))
+    )
   })
 })
