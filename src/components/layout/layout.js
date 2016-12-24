@@ -6,9 +6,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Layout as MdlLayout, Header, Content, Navigation, HeaderRow, Tab,
-  Grid, Cell, Footer, FooterSection, FooterLinkList } from 'react-mdl'
+  Grid, Cell, Footer, FooterSection, FooterLinkList, Spinner } from 'react-mdl'
 
-import { getAuth, getUserPhoto, isAuthenticated } from '../../modules/auth/selectors'
+import { getAuth, getUserPhoto, isAuthenticated, isInitialized } from '../../modules/auth/selectors'
 import { getLocation } from '../../routing/selectors'
 import { logout } from '../../modules/auth/reducer'
 import RoutedHeaderTabs from './routed-header-tabs'
@@ -18,6 +18,7 @@ import './layout.css'
 type LayoutProps = {
   auth: AuthState,
   isAuthenticated: boolean,
+  isAuthInitialized: boolean,
   children: any,
   logout: () => void,
   location: Location,
@@ -27,16 +28,18 @@ class Layout extends Component {
   props: LayoutProps
 
   render () {
-    const { children, isAuthenticated, logout, location, auth } = this.props
+    const { children, isAuthenticated, isAuthInitialized, logout, location, auth } = this.props
     const titleLink = <Link to="/" className="home-link">Colorful Learningcards</Link>
 
     return (
       <MdlLayout fixedHeader fixedTabs>
         <Header className={`${isAuthenticated ? 'authenticated' : ''}`}>
           <HeaderRow title={titleLink}>
-            <Navigation>
-              {!isAuthenticated ? (<Link to="/signin">SIGN IN</Link>) : null}
-            </Navigation>
+            {isAuthInitialized ? (
+              <Navigation>
+                {!isAuthenticated ? (<Link to="/signin">SIGN IN</Link>) : null}
+              </Navigation>
+            ) : null}
             {isAuthenticated ? (
               <img
                 src={getUserPhoto(auth.user)}
@@ -54,7 +57,9 @@ class Layout extends Component {
         <Content className="mdl-color--grey-100 mdl-color-text--grey-700">
           <Grid className="page-content">
             <Cell col={12}>
-              {children}
+              {!isAuthInitialized ? (
+                <div className="loading"><Spinner /></div>
+              ) : children}
             </Cell>
           </Grid>
         </Content>
@@ -74,6 +79,7 @@ class Layout extends Component {
 export default connect(state => ({
   auth: getAuth(state),
   isAuthenticated: isAuthenticated(state),
+  isAuthInitialized: isInitialized(state),
   location: getLocation(state),
 }), {
   logout,

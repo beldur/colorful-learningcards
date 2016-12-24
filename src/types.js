@@ -40,6 +40,7 @@ export type RouterState = {
 
 export type AuthState = {
   authenticated: boolean,
+  initialized: boolean,
   user: ?User,
 }
 

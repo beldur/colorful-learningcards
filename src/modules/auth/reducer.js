@@ -12,18 +12,22 @@ export const LOGIN_SUCCESS = `${NAME}/LOGIN_SUCCESS`
 const initialState: AuthState = {
   authenticated: false,
   user: null,
+  initialized: false,
 }
 
 const ACTION_HANDLERS: ActionHandlers<AuthState> = {
   [STATE_CHANGED]: (state, { user }) => ({
     authenticated: !!user,
     user: user || null,
+    initialized: true,
   }),
   [LOGIN_SUCCESS]: (state, { user }) => ({
+    ...state,
     authenticated: !!user,
     user: user || null,
   }),
   [LOGOUT_SUCCESS]: (state) => ({
+    ...state,
     authenticated: false,
     user: null,
   }),

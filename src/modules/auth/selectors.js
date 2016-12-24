@@ -11,3 +11,5 @@ export const isAuthenticated = (state: AppState): boolean => {
 }
 
 export const getUserPhoto = (user: ?User) => user ? user.photoURL : undefined
+
+export const isInitialized = (state: AppState): boolean => getAuth(state).initialized
