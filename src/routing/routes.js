@@ -28,12 +28,12 @@ class Routes extends PureComponent {
 
     return (
       <Layout>
-          <Match pattern='/' component={Home} exactly />
-          <Match pattern='/about' component={About} exactly />
-          <Match pattern='/signin' component={SignIn} exactly />
-          <MatchWhenAuthorized pattern='/cards' component={Cards} exactly isAuthenticated={isAuthenticated} />
-          <MatchWhenAuthorized pattern='/learn' component={Learn} exactly isAuthenticated={isAuthenticated} />
-          <Miss component={() => <Redirect to='/' />} />
+        <Match pattern='/' component={Home} exactly />
+        <Match pattern='/about' component={About} exactly />
+        <Match pattern='/signin' component={SignIn} exactly />
+        <MatchWhenAuthorized pattern='/cards' component={Cards} exactly isAuthenticated={isAuthenticated} />
+        <MatchWhenAuthorized pattern='/learn' component={Learn} exactly isAuthenticated={isAuthenticated} />
+        <Miss component={() => <Redirect to='/' />} />
       </Layout>
     )
   }
