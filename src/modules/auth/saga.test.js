@@ -1,8 +1,8 @@
-import { firebaseAuth } from '../../firebase.js'
+import { firebaseAuth } from '../../firebase'
 import { take, put, race, apply } from 'redux-saga/effects'
-import { navigate } from '../../routing/reducer.js'
-import { authFlow } from './saga.js'
-import * as actions from './reducer.js'
+import { push } from 'connected-react-router'
+import { authFlow } from './saga'
+import * as actions from './reducer'
 
 const startAuth = () => {
   const flow = authFlow()
@@ -22,7 +22,7 @@ describe('auth/saga', () => {
     const flow = startAuth()
 
     expect(flow.next({ loginSuccess: true }).value).toEqual(
-      put(navigate('/learn')),
+      put(push('/learn')),
     )
   })
 
@@ -38,7 +38,7 @@ describe('auth/saga', () => {
     )
 
     expect(flow.next().value).toEqual(
-      put(navigate('/')),
+      put(push('/')),
     )
   })
 

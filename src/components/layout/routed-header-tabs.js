@@ -3,10 +3,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { HeaderTabs } from 'react-mdl'
-import { navigate } from '../../routing/reducer.js'
+import { push } from 'connected-react-router'
 
-const RoutedHeaderTabs = ({ children, location, dispatch, navigate, ...props }) => {
-  let activeTab = -1;
+const RoutedHeaderTabs = ({ children, location, dispatch, push, ...props }) => {
+  let activeTab = -1
 
   children.forEach((child, index) => {
     if (child.props.to === location.pathname) {
@@ -17,7 +17,7 @@ const RoutedHeaderTabs = ({ children, location, dispatch, navigate, ...props }) 
   return (
     <HeaderTabs
       activeTab={activeTab}
-      onChange={(id) => navigate(children[id].props.to)}
+      onChange={(id) => push(children[id].props.to)}
       ripple
       {...props}
     >
@@ -26,6 +26,4 @@ const RoutedHeaderTabs = ({ children, location, dispatch, navigate, ...props }) 
   )
 }
 
-export default connect(undefined, {
-  navigate
-})(RoutedHeaderTabs)
+export default connect(undefined, { push })(RoutedHeaderTabs)

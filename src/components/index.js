@@ -1,10 +1,10 @@
-import Home from './pages/home/home.js'
-import Layout from './layout/layout.js'
-import About from './pages/about/about.js'
-import Cards from './pages/cards/cards.js'
-import Learn from './pages/learn/learn.js'
-import SignIn from './pages/signin/signin.js'
-import NotFound from './pages/not-found/not-found.js'
+import Home from './pages/home/home'
+import Layout from './layout/layout'
+import About from './pages/about/about'
+import Cards from './pages/cards/cards'
+import Learn from './pages/learn/learn'
+import SignIn from './pages/signin/signin'
+import NotFound from './pages/not-found/not-found'
 
 export {
   Home,

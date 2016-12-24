@@ -1,16 +1,18 @@
 // @flow
 
-import type { AuthState, Location } from '../../types.js'
+import type { AuthState, Location } from '../../types'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Layout as MdlLayout, Header, Content, Navigation, HeaderRow, Tab,
   Grid, Cell, Footer, FooterSection, FooterLinkList } from 'react-mdl'
-import { getAuth, getUserPhoto, isAuthenticated } from '../../modules/auth/selectors.js'
-import { getLocation } from '../../routing/selectors.js'
-import { logout } from '../../modules/auth/reducer.js'
-import RoutedHeaderTabs from './routed-header-tabs.js'
+
+import { getAuth, getUserPhoto, isAuthenticated } from '../../modules/auth/selectors'
+import { getLocation } from '../../routing/selectors'
+import { logout } from '../../modules/auth/reducer'
+import RoutedHeaderTabs from './routed-header-tabs'
+
 import './layout.css'
 
 type LayoutProps = {

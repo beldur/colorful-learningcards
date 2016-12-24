@@ -1,5 +1,5 @@
 // @flow
 
-import type { AppState, Location } from '../types.js'
+import type { AppState, Location } from '../types'
 
 export const getLocation = (state: AppState): Location => state.router.location

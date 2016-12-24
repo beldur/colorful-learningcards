@@ -1,6 +1,6 @@
 // @flow
 
-import type { AppState, AuthState, User } from '../../types.js'
+import type { AppState, AuthState, User } from '../../types'
 
 export const getAuth = (state: AppState): AuthState => state.auth
 

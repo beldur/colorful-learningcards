@@ -1,6 +1,8 @@
-import authSaga from '../modules/auth/saga.js'
+// @flow
 
-export default function *rootSaga () {
+import authSaga from '../modules/auth/saga'
+
+export default function *rootSaga(): Generator {
   yield [
     authSaga(),
   ]

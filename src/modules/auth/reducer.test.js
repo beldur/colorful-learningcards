@@ -1,5 +1,5 @@
 import reducer, { stateChanged, logoutSuccess,
-  STATE_CHANGED, LOGOUT_SUCCESS } from './reducer.js'
+  STATE_CHANGED, LOGOUT_SUCCESS } from './reducer'
 
 describe('auth/reducer', () => {
   it(`should handle ${STATE_CHANGED}`, () => {

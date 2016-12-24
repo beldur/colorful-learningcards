@@ -3,15 +3,17 @@
 import { applyMiddleware, createStore, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import createLogger from 'redux-logger'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { makeRootReducer } from './reducers'
 import sagas from './sagas'
 
-export default (initialState: Object = {}) => {
+
+export default (initialState: Object = {}, history: Object) => {
   const rootReducer = makeRootReducer()
   const sagaMiddleware = createSagaMiddleware()
   const loggerMiddleware = createLogger({ collapsed: true })
 
-  const middleware = [sagaMiddleware, loggerMiddleware]
+  const middleware = [routerMiddleware(history), sagaMiddleware, loggerMiddleware]
   const enhancers = []
 
   if (process.env.NODE_ENV === 'development') {
@@ -22,7 +24,7 @@ export default (initialState: Object = {}) => {
   }
 
   const store = createStore(
-    rootReducer,
+    connectRouter(history)(rootReducer),
     initialState,
     compose(applyMiddleware(...middleware), ...enhancers)
   )
