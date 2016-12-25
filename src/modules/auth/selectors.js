@@ -2,7 +2,8 @@
 
 import type { AppState, AuthState, User } from '../../types'
 
-export const getAuth = (state: AppState): AuthState => state.auth
+export const getAuth = (state: AppState): AuthState =>
+  state.auth
 
 export const isAuthenticated = (state: AppState): boolean => {
   const auth = getAuth(state)
@@ -10,6 +11,8 @@ export const isAuthenticated = (state: AppState): boolean => {
   return auth.authenticated && auth.user !== null
 }
 
-export const getUserPhoto = (user: ?User) => user ? user.photoURL : undefined
+export const getUserPhoto = (user: ?User) =>
+  user ? user.photoURL : undefined
 
-export const isInitialized = (state: AppState): boolean => getAuth(state).initialized
+export const isInitialized = (state: AppState): boolean =>
+  getAuth(state).initialized

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { Header as MdlHeader,  Navigation, HeaderRow, Tab } from 'react-mdl'
+import { Header as MdlHeader,  Navigation, HeaderRow, Tab, Tooltip } from 'react-mdl'
 import { Link } from 'react-router'
 
 import RoutedHeaderTabs from './routed-header-tabs'
@@ -22,12 +22,14 @@ class Header extends PureComponent {
             </Navigation>
           ) : null}
           {isAuthenticated ? (
-            <img
-              src={getUserPhoto(auth.user)}
-              role="presentation"
-              className="user-image"
-              onClick={logout}
-            />
+            <Tooltip label="Sign out">
+              <img
+                src={getUserPhoto(auth.user)}
+                role="presentation"
+                className="user-image"
+                onClick={logout}
+              />
+            </Tooltip>
           ) : null}
         </HeaderRow>
         <RoutedHeaderTabs location={location}>

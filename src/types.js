@@ -9,6 +9,12 @@ export type User = {
   photoURL: string,
 }
 
+export type Card = {
+  color: string,
+  front: string,
+  back: string,
+}
+
 // Actions
 
 export type ActionName = string
@@ -44,7 +50,12 @@ export type AuthState = {
   user: ?User,
 }
 
+export type CardsState = {
+  createOpen: boolean,
+}
+
 export type AppState = {
   router: RouterState,
   auth: AuthState,
+  cards: CardsState,
 }
