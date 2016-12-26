@@ -6,7 +6,7 @@
       "$uid": {
         "$cardId": {
           ".validate": "newData.hasChildren(['front', 'back', 'color', 'createdAt'])",
-          ".indexOn": ["createAt"],
+          ".indexOn": ["createdAt"],
           "createdAt": {
             ".validate": "newData.isNumber() && newData.val() == now"
           },
