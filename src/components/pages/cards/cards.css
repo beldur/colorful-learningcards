@@ -1,7 +1,6 @@
 .create-card .mdl-card {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
-	min-width: 400px;
 	max-width: 700px;
 }
 
