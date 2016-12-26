@@ -1,6 +1,6 @@
 // @flow
 
-import type { User } from './types'
+import type { User } from 'types'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -22,9 +22,13 @@ export const authUIConfig = {
   }],
 }
 
-export const firebaseAuth = firebase.auth()
+export const auth = firebase.auth()
 
-const authUI = new firebaseui.auth.AuthUI(firebaseAuth)
+export const database = firebase.database()
+
+export const TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
+
+const authUI = new firebaseui.auth.AuthUI(auth)
 
 export const firebaseAuthUI = (element: HTMLElement, signInSuccess: (user: User) => void) => {
   authUI.start(element, {

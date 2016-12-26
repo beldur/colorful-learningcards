@@ -3,8 +3,8 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardText } from 'react-mdl'
-import { firebaseAuthUI } from '../../../firebase'
-import { loginSuccess } from '../../../modules/auth/reducer'
+import { firebaseAuthUI } from 'modules/firebase'
+import { loginSuccess } from 'modules/auth/reducer'
 
 import './signin.css'
 import 'firebaseui/dist/firebaseui.css'

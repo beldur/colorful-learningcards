@@ -1,6 +1,24 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "false"
+    ".write": "false",
+    "cards": {
+      "$uid": {
+        "$cardId": {
+          ".validate": "newData.hasChildren(['front', 'back', 'color', 'createdAt'])",
+          ".indexOn": ["createAt"],
+          "createdAt": {
+            ".validate": "newData.isNumber() && newData.val() == now"
+          },
+          "front": {
+            ".validate": "newData.isString() && newData.val().length > 0"
+          },
+          "back": {
+            ".validate": "newData.isString() && newData.val().length > 0"
+          }
+        },
+        ".write": "$uid === auth.uid"
+      }
+    }
   }
 }

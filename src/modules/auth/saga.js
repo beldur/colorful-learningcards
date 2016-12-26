@@ -3,7 +3,7 @@
 import { takeLatest } from 'redux-saga/effects'
 import { take, put, apply, race } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
-import { firebaseAuth } from '../../firebase'
+import { auth } from '../firebase'
 import * as actions from './reducer'
 
 export function* authFlow(): Generator<*,*,*> {
@@ -14,7 +14,7 @@ export function* authFlow(): Generator<*,*,*> {
 
   if (logoutRequested) {
     try {
-      yield apply(firebaseAuth, firebaseAuth.signOut)
+      yield apply(auth, auth.signOut)
       yield put(actions.logoutSuccess())
       yield put(push('/'))
     } catch(error) {

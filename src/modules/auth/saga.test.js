@@ -1,6 +1,6 @@
-import { firebaseAuth } from '../../firebase'
 import { take, put, race, apply } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
+import { auth } from 'modules/firebase'
 import { authFlow } from './saga'
 import * as actions from './reducer'
 
@@ -30,7 +30,7 @@ describe('auth/saga', () => {
     const flow = startAuth()
 
     expect(flow.next({ logoutRequested: true }).value).toEqual(
-      apply(firebaseAuth, firebaseAuth.signOut)
+      apply(auth, auth.signOut)
     )
 
     expect(flow.next().value).toEqual(
@@ -47,7 +47,7 @@ describe('auth/saga', () => {
     const error = 'Failure'
 
     expect(flow.next({ logoutRequested: true }).value).toEqual(
-      apply(firebaseAuth, firebaseAuth.signOut)
+      apply(auth, auth.signOut)
     )
 
     expect(flow.throw(error).value).toEqual(

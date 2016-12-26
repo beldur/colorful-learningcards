@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action, CardsState, ActionHandlers, Card } from '../../types'
+import type { Action, CardsState, ActionHandlers, Card } from 'types'
 
 const NAME = 'cards'
 export const CREATE_OPEN = `${NAME}/CREATE_OPEN`
@@ -11,6 +11,7 @@ export const CREATE_FAILURE = `${NAME}/CREATE_CARD_FAILURE`
 
 const initialState: CardsState = {
   createOpen: false,
+  busy: false,
 }
 
 const ACTION_HANDLERS: ActionHandlers<CardsState> = {
@@ -21,6 +22,18 @@ const ACTION_HANDLERS: ActionHandlers<CardsState> = {
   [CREATE_CLOSE]: (state) => ({
     ...state,
     createOpen: false,
+  }),
+  [CREATE_REQUESTED]: (state) => ({
+    ...state,
+    busy: true,
+  }),
+  [CREATE_FAILURE]: (state) => ({
+    ...state,
+    busy: false,
+  }),
+  [CREATE_SUCCESS]: (state) => ({
+    ...state,
+    busy: false,
   }),
 }
 
@@ -43,4 +56,14 @@ export const createClose = (): Action => ({
 export const createRequested = (card: Card): Action => ({
   type: CREATE_REQUESTED,
   payload: { card },
+})
+
+export const createFailed = (error: Error): Action => ({
+  type: CREATE_FAILURE,
+  payload: { error },
+})
+
+export const createSuccess = (): Action => ({
+  type: CREATE_SUCCESS,
+  payload: { },
 })

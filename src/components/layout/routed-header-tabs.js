@@ -6,13 +6,12 @@ import { HeaderTabs } from 'react-mdl'
 import { push } from 'connected-react-router'
 
 const RoutedHeaderTabs = ({ children, location, dispatch, push, ...props }) => {
-  let activeTab = -1
-
-  children.forEach((child, index) => {
+  const activeTab = children.reduce((result, child, index) => {
     if (child.props.to === location.pathname) {
-      activeTab = index
+      return index
     }
-  })
+    return result
+  }, -1)
 
   return (
     <HeaderTabs
@@ -26,4 +25,6 @@ const RoutedHeaderTabs = ({ children, location, dispatch, push, ...props }) => {
   )
 }
 
-export default connect(undefined, { push })(RoutedHeaderTabs)
+export default connect(undefined, {
+  push,
+})(RoutedHeaderTabs)

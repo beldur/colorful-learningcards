@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action, AuthState, User, ActionHandlers } from '../../types'
+import type { Action, AuthState, User, ActionHandlers } from 'types'
 
 const NAME = 'auth'
 export const STATE_CHANGED = `${NAME}/STATE_CHANGED`

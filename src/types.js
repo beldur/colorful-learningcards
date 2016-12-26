@@ -9,8 +9,17 @@ export type User = {
   photoURL: string,
 }
 
+export type Color =
+  | 'blue'
+  | 'orange'
+  | 'red'
+  | 'green'
+  | 'cyan'
+  | 'purple'
+
 export type Card = {
-  color: string,
+  uuid: string,
+  color: Color,
   front: string,
   back: string,
 }
@@ -52,10 +61,17 @@ export type AuthState = {
 
 export type CardsState = {
   createOpen: boolean,
+  busy: boolean,
+}
+
+export type SnackbarState = {
+  isVisible: boolean,
+  text: string,
 }
 
 export type AppState = {
   router: RouterState,
   auth: AuthState,
   cards: CardsState,
+  snackbar: SnackbarState,
 }

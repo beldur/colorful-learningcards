@@ -12,7 +12,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import createStore from './store'
 import Routes from './routing/routes'
-import { firebaseAuth } from './firebase'
+import { auth } from './modules/firebase'
 import { stateChanged } from './modules/auth/reducer'
 
 import 'react-mdl/extra/material.css'
@@ -23,7 +23,7 @@ import './index.css'
 const history = createBrowserHistory()
 const store = createStore({}, history)
 
-firebaseAuth.onAuthStateChanged((user?: User) => store.dispatch(stateChanged(user)))
+auth.onAuthStateChanged((user?: User) => store.dispatch(stateChanged(user)))
 
 const render = (Routes) => {
   ReactDOM.render(

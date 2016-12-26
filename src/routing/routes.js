@@ -4,8 +4,8 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Match, Miss, Redirect } from 'react-router'
 
-import { Home, About, Layout, SignIn, Cards, Learn } from '../components/index'
-import { isAuthenticated } from '../modules/auth/selectors'
+import { Home, About, Layout, SignIn, Cards, Learn } from 'components/index'
+import { isAuthenticated } from 'modules/auth/selectors'
 
 type RoutesProps = {
   isAuthenticated: boolean,

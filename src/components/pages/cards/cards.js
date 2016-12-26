@@ -1,11 +1,13 @@
 // @flow
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { FABButton, Icon, Tooltip, Card, CardText, CardActions,
-  Textfield, Button, CardMenu, CardTitle } from 'react-mdl'
-import * as actions from '../../../modules/cards/reducer'
-import { isCreateOpen } from '../../../modules/cards/selectors'
+import { FABButton, Icon, Tooltip  } from 'react-mdl'
+import * as actions from 'modules/cards/reducer'
+import { isCreateOpen } from 'modules/cards/selectors'
+import CreateCard from './create-card'
+
+import './cards.css'
 
 type CardsProps = {
   createOpen: () => void,
@@ -14,7 +16,7 @@ type CardsProps = {
   isCreateOpen: boolean,
 }
 
-class Cards extends Component {
+class Cards extends PureComponent {
   props: CardsProps
 
   render () {
@@ -25,23 +27,10 @@ class Cards extends Component {
         <h4>Cards</h4>
 
         { isCreateOpen ? (
-          <Card shadow={2}>
-            <CardTitle></CardTitle>
-            <CardText>
-              <Textfield label="Front" floatingLabel />
-              <Textfield label="Back" floatingLabel />
-            </CardText>
-            <CardActions border>
-              <Button raised ripple onClick={createClose}>Cancel</Button>
-              <Button raised ripple primary onClick={createRequested}>Save</Button>
-            </CardActions>
-            <CardMenu>
-              <FABButton ripple mini className="mdl-color--blue" />
-              <FABButton ripple mini className="mdl-color--orange" />
-              <FABButton ripple mini className="mdl-color--red" />
-              <FABButton ripple mini className="mdl-color--green" />
-            </CardMenu>
-          </Card>
+          <CreateCard
+            onCancel={createClose}
+            onSave={createRequested}
+          />
         ) : (
           <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
             <Tooltip label="Add Card">

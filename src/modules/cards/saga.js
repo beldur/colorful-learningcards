@@ -1,8 +1,11 @@
 // @flow
 
-import { takeLatest, take, race, put } from 'redux-saga/effects'
+import { takeLatest, take, race, put, select, call, spawn } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'connected-react-router'
 import * as actions from './reducer'
+import { database, TIMESTAMP } from '../firebase'
+import { getUserId } from 'modules/auth/selectors'
+import { show as showSnackbar } from 'modules/snackbar/reducer'
 
 export function* createCardFlow(): Generator<*,*,*> {
   const { createRequested, locationChange } = yield race({
@@ -13,13 +16,23 @@ export function* createCardFlow(): Generator<*,*,*> {
   if (locationChange) {
     yield put(actions.createClose())
   } else if (createRequested) {
-    console.log(createRequested)
+    const { payload: { card } } = createRequested
+
     try {
+      const uid = yield select(getUserId)
+      const ref = database.ref(`cards/${uid}/${card.uuid}`)
 
+      card.createdAt = TIMESTAMP
+
+      yield call([ref, ref.set], card)
+      yield put(actions.createSuccess())
+      yield put(actions.createClose())
+      yield put(showSnackbar('Card created successfully'))
     } catch (error) {
-
+      yield put(actions.createFailed(error))
+      yield put(showSnackbar('Error creating card'))
+      yield spawn(createCardFlow)
     }
-    yield put(actions.createClose())
   }
 }
 

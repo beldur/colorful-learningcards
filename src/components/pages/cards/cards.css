@@ -1,0 +1,33 @@
+.create-card .mdl-card {
+	width: 80%;
+	margin: 0 auto;
+	min-width: 400px;
+	max-width: 700px;
+}
+
+.create-card .mdl-card__actions {
+	text-align: right;
+}
+
+.create-card .mdl-card__actions button {
+	margin-left: 1em;
+}
+
+.create-card .create-card--input {
+	display: flex;
+	flex-direction: column;
+}
+
+.create-card .create-card--input .mdl-textfield {
+	width: auto;
+}
+
+.create-card .busy {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    background: rgba(255,255,255,0.7);
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
