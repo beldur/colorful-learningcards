@@ -18,7 +18,6 @@ export type Color =
   | 'purple'
 
 export type Card = {
-  uuid: string,
   color: Color,
   front: string,
   back: string,

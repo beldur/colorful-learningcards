@@ -4,7 +4,6 @@ import type { Color, Card } from 'types'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
 import { FABButton, Card as MdlCard, CardText, CardActions, Icon, Spinner,
   Textfield, Button, CardTitle } from 'react-mdl'
 import { COLORS } from 'modules/cards/constants'
@@ -21,7 +20,6 @@ type CreateCardState = {
   color: Color,
   front: string,
   back: string,
-  uuid: string,
 }
 
 class CreateCard extends Component {
@@ -39,7 +37,6 @@ class CreateCard extends Component {
       color: props.initialColor,
       front: '',
       back: '',
-      uuid: uuid(),
     }
   }
 
@@ -57,9 +54,9 @@ class CreateCard extends Component {
 
   handleSaveClick() {
     const { onSave } = this.props
-    const { color, front, back, uuid } = this.state
+    const { color, front, back } = this.state
 
-    onSave({ color, front, back, uuid })
+    onSave({ color, front, back })
   }
 
   render() {

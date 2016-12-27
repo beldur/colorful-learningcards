@@ -1,5 +1,7 @@
 // @flow
 
+import type { AuthState, Location } from 'types'
+
 import React, { PureComponent } from 'react'
 import { Header as MdlHeader, Navigation, HeaderRow, Tab, Tooltip } from 'react-mdl'
 import { Link } from 'react-router'
@@ -7,15 +9,26 @@ import { Link } from 'react-router'
 import RoutedHeaderTabs from './routed-header-tabs'
 import { getUserPhoto } from 'modules/auth/selectors'
 
-class Header extends PureComponent {
-  render() {
-    const { isAuthenticated, isAuthInitialized, auth, logout, location } = this.props
+type HeaderProps = {
+  isAuthenticated: boolean,
+  isAuthInitialized: boolean,
+  auth: AuthState,
+  logout: () => void,
+  location: Location,
+  scroll: number
+}
 
+class Header extends PureComponent {
+  props: HeaderProps
+
+  render() {
+    const { isAuthenticated, isAuthInitialized, auth, logout, location, scroll } = this.props
     const titleLink = <Link to="/" className="home-link">Colorful Learningcards</Link>
+    const marginTop = (scroll > 56 && isAuthenticated) ? -56 : 0
 
     return (
       <MdlHeader className={`${isAuthenticated ? 'authenticated' : ''}`}>
-        <HeaderRow title={titleLink}>
+        <HeaderRow title={titleLink} style={{ marginTop }}>
           {isAuthInitialized ? (
             <Navigation>
               {!isAuthenticated ? (<Link to="/signin">SIGN IN</Link>) : null}

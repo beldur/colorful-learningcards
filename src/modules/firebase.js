@@ -4,6 +4,7 @@ import type { User } from 'types'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/database'
 import firebaseui from 'firebaseui'
 
 const config = {
@@ -14,21 +15,37 @@ const config = {
   messagingSenderId: "377302876686"
 }
 
-firebase.initializeApp(config)
-
-export const authUIConfig = {
+const authUIConfig = {
   signInOptions: [{
     provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   }],
 }
 
-export const auth = firebase.auth()
+let initialized = false
+let auth
+let TIMESTAMP
+let database
+let authUI
 
-export const database = firebase.database()
+export const initialize = () => {
+  if (!initialized) {
+    firebase.initializeApp(config)
 
-export const TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
+    auth = firebase.auth()
+    database = firebase.database()
+    TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
+    authUI = new firebaseui.auth.AuthUI(auth)
 
-const authUI = new firebaseui.auth.AuthUI(auth)
+    initialized = true
+  }
+
+  return {
+    auth,
+    TIMESTAMP,
+    database,
+    authUI,
+  }
+}
 
 export const firebaseAuthUI = (element: HTMLElement, signInSuccess: (user: User) => void) => {
   authUI.start(element, {

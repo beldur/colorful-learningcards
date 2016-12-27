@@ -1,8 +1,10 @@
 import { take, put, race, apply } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
-import { auth } from 'modules/firebase'
+import { initialize as initFirebase } from 'modules/firebase'
 import { authFlow } from './saga'
 import * as actions from './reducer'
+
+const { auth } = initFirebase()
 
 const startAuth = () => {
   const flow = authFlow()

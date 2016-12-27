@@ -2,7 +2,7 @@
 
 import type { AuthState, Location } from 'types'
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Layout as MdlLayout, Content, Grid, Cell, Footer, Snackbar,
@@ -27,12 +27,30 @@ type LayoutProps = {
   isSnackbarVisible: boolean,
 }
 
-class Layout extends PureComponent {
+type LayoutState = {
+  scroll: number,
+}
+
+class Layout extends Component {
   props: LayoutProps
+  state: LayoutState
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      scroll: 0,
+    }
+  }
+
+  handleScroll(event) {
+    this.setState({ scroll: event.target.scrollTop })
+  }
 
   render () {
     const { children, isAuthenticated, isAuthInitialized, logout,
       location, auth, isSnackbarVisible, snackbarText } = this.props
+    const { scroll } = this.state
 
     return (
       <MdlLayout fixedHeader fixedTabs>
@@ -42,8 +60,12 @@ class Layout extends PureComponent {
           location={location}
           logout={logout}
           auth={auth}
+          scroll={scroll}
         />
-        <Content className="mdl-color--grey-100 mdl-color-text--grey-700">
+        <Content
+          className="mdl-color--grey-100 mdl-color-text--grey-700"
+          onScroll={e => this.handleScroll(e)}
+        >
           <Grid className="page-content">
             <Cell col={12}>
               {!isAuthInitialized ? (

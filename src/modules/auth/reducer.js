@@ -54,7 +54,7 @@ export const logoutFailed = (error: any): Action => ({
   payload: { error },
 })
 
-export const logoutSuccess = () : Action => ({
+export const logoutSuccess = (): Action => ({
   type: LOGOUT_SUCCESS,
   payload: { },
 })

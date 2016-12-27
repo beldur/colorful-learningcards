@@ -3,8 +3,10 @@
 import { takeLatest } from 'redux-saga/effects'
 import { take, put, apply, race } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
-import { auth } from '../firebase'
+import { initialize as initFirebase } from 'modules/firebase'
 import * as actions from './reducer'
+
+const { auth } = initFirebase()
 
 export function* authFlow(): Generator<*,*,*> {
   const { loginSuccess, logoutRequested } = yield race({

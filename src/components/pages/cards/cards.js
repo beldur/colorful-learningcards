@@ -24,13 +24,14 @@ class Cards extends PureComponent {
 
     return (
       <div>
-        <h4>Cards</h4>
-
         { isCreateOpen ? (
-          <CreateCard
-            onCancel={createClose}
-            onSave={createRequested}
-          />
+          <div>
+            <h4>New Card</h4>
+            <CreateCard
+              onCancel={createClose}
+              onSave={createRequested}
+            />
+          </div>
         ) : (
           <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
             <Tooltip label="Add Card">
