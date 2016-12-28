@@ -23,7 +23,7 @@ class Header extends PureComponent {
   render() {
     const { isAuthenticated, isAuthInitialized, user, logout, location, scroll } = this.props
     const titleLink = <Link to="/" className="home-link">Colorful Learningcards</Link>
-    const marginTop = (scroll > 112 && isAuthenticated) ? -56 : 0
+    const marginTop = 0 //(scroll > 112 && isAuthenticated) ? -56 : 0
 
     return (
       <MdlHeader className={`${isAuthenticated ? 'authenticated' : ''}`}>

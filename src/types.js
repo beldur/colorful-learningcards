@@ -17,7 +17,10 @@ export type Color =
   | 5 //'cyan'
   | 6 //'purple'
 
+export type CardKey = string
+
 export type Card = {
+  key: CardKey,
   color: Color,
   front: string,
   back: string,
@@ -58,9 +61,15 @@ export type AuthState = {
   user: ?User,
 }
 
+export type CardList = {
+  [CardKey]: Card,
+}
+
 export type CardsState = {
   createOpen: boolean,
   busy: boolean,
+  byKey: CardList,
+  sortedByCreatedAt: Array<string>,
 }
 
 export type SnackbarState = {

@@ -6,6 +6,7 @@ import { FABButton, Icon, Tooltip  } from 'react-mdl'
 import * as actions from 'modules/cards/reducer'
 import { isCreateOpen } from 'modules/cards/selectors'
 import CreateCard from './create-card'
+import CardList from './card-list'
 
 import './cards.css'
 
@@ -19,12 +20,12 @@ type CardsProps = {
 class Cards extends PureComponent {
   props: CardsProps
 
-  render () {
+  render() {
     const { createOpen, createClose, isCreateOpen, createRequested } = this.props
 
     return (
       <div>
-        { isCreateOpen ? (
+        {isCreateOpen ? (
           <div>
             <h4>New Card</h4>
             <CreateCard
@@ -32,7 +33,9 @@ class Cards extends PureComponent {
               onSave={createRequested}
             />
           </div>
-        ) : (
+        ) : <CardList />}
+
+        {!isCreateOpen ? (
           <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
             <Tooltip label="Add Card">
               <FABButton colored ripple onClick={createOpen}>
@@ -40,7 +43,7 @@ class Cards extends PureComponent {
               </FABButton>
             </Tooltip>
           </div>
-        )}
+        ) : null}
       </div>
     )
   }

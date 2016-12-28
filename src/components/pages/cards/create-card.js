@@ -56,7 +56,7 @@ class CreateCard extends Component {
     const { onSave } = this.props
     const { color, front, back } = this.state
 
-    onSave({ color, front, back })
+    onSave({ color, front, back, key: '' })
   }
 
   render() {
