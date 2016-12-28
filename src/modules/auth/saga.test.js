@@ -19,7 +19,7 @@ const startAuth = () => {
   return flow
 }
 
-describe('auth/saga', () => {
+describe('auth/saga/authFlow', () => {
   it('should handle successful login flow', () => {
     const flow = startAuth()
 

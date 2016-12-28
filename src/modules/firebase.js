@@ -8,11 +8,11 @@ import 'firebase/database'
 import firebaseui from 'firebaseui'
 
 const config = {
-  apiKey: "AIzaSyCb0xlBXAYa9mjVlDMC9hSWmyAPntgEAtk",
-  authDomain: "colorful-learningcards.firebaseapp.com",
-  databaseURL: "https://colorful-learningcards.firebaseio.com",
-  storageBucket: "colorful-learningcards.appspot.com",
-  messagingSenderId: "377302876686"
+  apiKey: "AIzaSyCb0xlBXAYa9mjVlDMC9hSWmyAPntgEAtk", // Auth / General Use
+  authDomain: "colorful-learningcards.firebaseapp.com", // Auth with popup/redirect
+  databaseURL: "https://colorful-learningcards.firebaseio.com", // Realtime Database
+  storageBucket: "colorful-learningcards.appspot.com", // Storage
+  messagingSenderId: "377302876686", // Storage
 }
 
 const authUIConfig = {
@@ -21,22 +21,19 @@ const authUIConfig = {
   }],
 }
 
-let initialized = false
 let auth
 let TIMESTAMP
 let database
 let authUI
 
 export const initialize = () => {
-  if (!initialized) {
+  if (firebase.apps.length === 0) {
     firebase.initializeApp(config)
 
     auth = firebase.auth()
     database = firebase.database()
     TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
     authUI = new firebaseui.auth.AuthUI(auth)
-
-    initialized = true
   }
 
   return {
