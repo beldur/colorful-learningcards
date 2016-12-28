@@ -4,7 +4,7 @@ import { takeLatest, take, race, put, select, call, spawn } from 'redux-saga/eff
 import { LOCATION_CHANGE } from 'connected-react-router'
 import * as actions from './reducer'
 import { initialize as initFirebase } from '../firebase'
-import { getUserId } from 'modules/auth/selectors'
+import { getUser } from 'modules/auth/selectors'
 import { show as showSnackbar } from 'modules/snackbar/reducer'
 
 const { database, TIMESTAMP } = initFirebase()
@@ -21,7 +21,7 @@ export function* createCardFlow(): Generator<*,*,*> {
     const { payload: { card } } = createRequested
 
     try {
-      const uid = yield select(getUserId)
+      const { uid } = yield select(getUser)
       const ref = database.ref(`cards/${uid}`)
 
       card.createdAt = TIMESTAMP

@@ -27,7 +27,7 @@ class CreateCard extends Component {
   state: CreateCardState
 
   static defaultProps = {
-    initialColor: 'blue',
+    initialColor: 1,
   }
 
   constructor(props: CreateCardProps) {
@@ -67,15 +67,15 @@ class CreateCard extends Component {
       <div className="create-card">
         <MdlCard shadow={2}>
           <CardTitle>
-            {COLORS.map(c =>
+            {Object.keys(COLORS).map(c =>
               <FABButton
                 className={`mdl-color--${c} mdl-color-text--white`}
-                onClick={() => this.handleColorClick(c)}
+                onClick={() => this.handleColorClick(COLORS[c])}
                 key={c}
                 ripple
                 mini
               >
-                {color === c ? <Icon name="check" /> : null}
+                {color === COLORS[c] ? <Icon name="check" /> : null}
               </FABButton>
             )}
           </CardTitle>

@@ -1,6 +1,6 @@
 // @flow
 
-import type { AuthState, Location } from 'types'
+import type { User, Location } from 'types'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -8,7 +8,7 @@ import { Link } from 'react-router'
 import { Layout as MdlLayout, Content, Grid, Cell, Footer, Snackbar,
   FooterSection, FooterLinkList, Spinner } from 'react-mdl'
 
-import { getAuth, isAuthenticated, isInitialized } from 'modules/auth/selectors'
+import { getUser, isAuthenticated, isInitialized } from 'modules/auth/selectors'
 import { isSnackbarVisible, getSnackbarText } from 'modules/snackbar/selectors'
 import { getLocation } from 'routing/selectors'
 import { logout } from 'modules/auth/reducer'
@@ -17,7 +17,7 @@ import Header from './header'
 import './layout.css'
 
 type LayoutProps = {
-  auth: AuthState,
+  user: User,
   isAuthenticated: boolean,
   isAuthInitialized: boolean,
   children: any,
@@ -49,7 +49,7 @@ class Layout extends Component {
 
   render () {
     const { children, isAuthenticated, isAuthInitialized, logout,
-      location, auth, isSnackbarVisible, snackbarText } = this.props
+      location, user, isSnackbarVisible, snackbarText } = this.props
     const { scroll } = this.state
 
     return (
@@ -59,7 +59,7 @@ class Layout extends Component {
           isAuthInitialized={isAuthInitialized}
           location={location}
           logout={logout}
-          auth={auth}
+          user={user}
           scroll={scroll}
         />
         <Content
@@ -91,7 +91,7 @@ class Layout extends Component {
 }
 
 export default connect(state => ({
-  auth: getAuth(state),
+  user: getUser(state),
   isAuthenticated: isAuthenticated(state),
   isAuthInitialized: isInitialized(state),
   location: getLocation(state),

@@ -11,15 +11,10 @@ export const isAuthenticated = (state: AppState): boolean => {
   return auth.authenticated && auth.user !== null
 }
 
-export const getUserPhoto = (user: ?User) =>
-  user ? user.photoURL : undefined
-
-export const getUserId = (state: AppState): ?string => {
+export const getUser = (state: AppState): ?User => {
   const user = getAuth(state).user
 
-  if (user) {
-    return user.uid
-  }
+  return user || undefined
 }
 
 export const isInitialized = (state: AppState): boolean =>

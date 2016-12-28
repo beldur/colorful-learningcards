@@ -10,11 +10,14 @@
           "createdAt": {
             ".validate": "newData.isNumber() && newData.val() == now"
           },
+          "color": {
+            ".validate": "newData.isNumber()"
+          },
           "front": {
-            ".validate": "newData.isString() && newData.val().length > 0"
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 255"
           },
           "back": {
-            ".validate": "newData.isString() && newData.val().length > 0"
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 255"
           }
         },
         ".write": "$uid === auth.uid"
