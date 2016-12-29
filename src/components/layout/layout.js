@@ -75,7 +75,7 @@ class Layout extends Component {
           </Grid>
         </Content>
         <Footer size="mini">
-          <FooterSection logo="Colorful Learningcards">
+          <FooterSection logo={<div className="mdl-cell--hide-phone">Colorful Learningcards</div>}>
             <FooterLinkList>
               <Link to="/">Home</Link>
               <Link to="/about">About</Link>

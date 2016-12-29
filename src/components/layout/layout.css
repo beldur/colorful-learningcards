@@ -11,6 +11,7 @@
 
 .mdl-layout .mdl-mini-footer {
 	padding: 16px;
+	display: block;
 }
 
 .page-content {
