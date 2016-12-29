@@ -26,7 +26,7 @@ class Header extends PureComponent {
     const marginTop = 0 //(scroll > 112 && isAuthenticated) ? -56 : 0
 
     return (
-      <MdlHeader className={`${isAuthenticated ? 'authenticated' : ''}`}>
+      <MdlHeader className={`${scroll > 56 ? 'fixed' : ''} ${isAuthenticated ? 'authenticated' : ''}`}>
         <HeaderRow title={titleLink} style={{ marginTop }}>
           {isAuthInitialized ? (
             <Navigation>

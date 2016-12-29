@@ -54,18 +54,18 @@ class Layout extends Component {
 
     return (
       <MdlLayout fixedHeader fixedTabs>
-        <Header
-          isAuthenticated={isAuthenticated}
-          isAuthInitialized={isAuthInitialized}
-          location={location}
-          logout={logout}
-          user={user}
-          scroll={scroll}
-        />
         <Content
           className="mdl-color--grey-100 mdl-color-text--grey-700"
           onScroll={e => this.handleScroll(e)}
         >
+          <Header
+            isAuthenticated={isAuthenticated}
+            isAuthInitialized={isAuthInitialized}
+            location={location}
+            logout={logout}
+            user={user}
+            scroll={scroll}
+          />
           <Grid className="page-content">
             <Cell col={12}>
               {!isAuthInitialized ? (
@@ -75,7 +75,8 @@ class Layout extends Component {
           </Grid>
         </Content>
         <Footer size="mini">
-          <FooterSection logo={<div className="mdl-cell--hide-phone">Colorful Learningcards</div>}>
+          <FooterSection>
+            <div className="mdl-logo mdl-cell--hide-phone mdl-cell--hide-tablet">Colorful Learningcards</div>
             <FooterLinkList>
               <Link to="/">Home</Link>
               <Link to="/about">About</Link>
