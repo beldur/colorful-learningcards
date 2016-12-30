@@ -11,12 +11,12 @@ type RoutesProps = {
   isAuthenticated: boolean,
 }
 
-const MatchWhenAuthorized = ({ isAuthenticated, component: Component, ...rest }) =>
+export const MatchWhenAuthorized = ({ isAuthenticated, component: Component, redirect, ...rest }: Object) =>
   <Match {...rest} render={props => (
     (isAuthenticated) ? (
       <Component {...props} />
     ) : (
-      <Redirect to="/" />
+      redirect ? <Redirect to="/" /> : <div></div>
     )
   )} />
 
@@ -31,8 +31,20 @@ class Routes extends PureComponent {
         <Match pattern='/' component={Home} exactly />
         <Match pattern='/about' component={About} exactly />
         <Match pattern='/signin' component={SignIn} exactly />
-        <MatchWhenAuthorized pattern='/cards' component={Cards} exactly isAuthenticated={isAuthenticated} />
-        <MatchWhenAuthorized pattern='/learn' component={Learn} exactly isAuthenticated={isAuthenticated} />
+        <MatchWhenAuthorized
+          pattern='/cards'
+          component={Cards}
+          exactly
+          isAuthenticated={isAuthenticated}
+          redirect
+        />
+        <MatchWhenAuthorized
+          pattern='/learn'
+          component={Learn}
+          exactly
+          isAuthenticated={isAuthenticated}
+          redirect
+        />
         <Miss component={() => <Redirect to='/' />} />
       </Layout>
     )

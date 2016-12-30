@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { FABButton, Icon, Tooltip  } from 'react-mdl'
 import * as actions from 'modules/cards/reducer'
 import { isCreateOpen } from 'modules/cards/selectors'
 import CreateCard from './create-card'

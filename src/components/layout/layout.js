@@ -5,15 +5,15 @@ import type { User, Location } from 'types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Layout as MdlLayout, Content, Grid, Cell, Footer, Snackbar, Tooltip, FABButton, Icon,
+import { Layout as MdlLayout, Content, Grid, Cell, Footer, Snackbar,
   FooterSection, FooterLinkList, Spinner } from 'react-mdl'
 
 import { getUser, isAuthenticated, isInitialized } from 'modules/auth/selectors'
 import { isSnackbarVisible, getSnackbarText } from 'modules/snackbar/selectors'
 import { getLocation } from 'routing/selectors'
 import { logout } from 'modules/auth/reducer'
-import { createOpen } from 'modules/cards/reducer'
-import { isCreateOpen } from 'modules/cards/selectors'
+import { MatchWhenAuthorized } from 'routing/routes'
+import CreateCardButton from '../pages/cards/create-card-button'
 import Header from './header'
 
 import './layout.css'
@@ -27,12 +27,12 @@ type LayoutProps = {
   location: Location,
   snackbarText: string,
   isSnackbarVisible: boolean,
-  createOpen: () => void,
 }
 
 type LayoutState = {
   scroll: number,
 }
+
 
 class Layout extends Component {
   props: LayoutProps
@@ -51,8 +51,8 @@ class Layout extends Component {
   }
 
   render () {
-    const { children, isAuthenticated, isAuthInitialized, logout, isCreateOpen,
-      location, user, isSnackbarVisible, snackbarText, createOpen } = this.props
+    const { children, isAuthenticated, isAuthInitialized, logout,
+      location, user, isSnackbarVisible, snackbarText } = this.props
     const { scroll } = this.state
 
     return (
@@ -78,15 +78,12 @@ class Layout extends Component {
           </Grid>
         </Content>
 
-        {!isCreateOpen ? (
-          <div className="page-action-button">
-            <Tooltip label="Add Card">
-              <FABButton colored ripple onClick={createOpen}>
-                <Icon name="add" />
-              </FABButton>
-            </Tooltip>
-          </div>
-        ) : null}
+        <MatchWhenAuthorized
+          pattern='/cards'
+          isAuthenticated={isAuthenticated}
+          exactly
+          component={CreateCardButton}
+        />
 
         <Footer size="mini">
           <FooterSection>
@@ -112,8 +109,6 @@ export default connect(state => ({
   location: getLocation(state),
   isSnackbarVisible: isSnackbarVisible(state),
   snackbarText: getSnackbarText(state),
-  isCreateOpen: isCreateOpen(state),
 }), {
   logout,
-  createOpen,
 })(Layout)
