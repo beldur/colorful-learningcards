@@ -11,7 +11,6 @@ import CardList from './card-list'
 import './cards.css'
 
 type CardsProps = {
-  createOpen: () => void,
   createClose: () => void,
   createRequested: () => void,
   isCreateOpen: boolean,
@@ -21,7 +20,7 @@ class Cards extends PureComponent {
   props: CardsProps
 
   render() {
-    const { createOpen, createClose, isCreateOpen, createRequested } = this.props
+    const { createClose, isCreateOpen, createRequested } = this.props
 
     return (
       <div>
@@ -33,17 +32,9 @@ class Cards extends PureComponent {
               onSave={createRequested}
             />
           </div>
-        ) : <CardList />}
-
-        {!isCreateOpen ? (
-          <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
-            <Tooltip label="Add Card">
-              <FABButton colored ripple onClick={createOpen}>
-                <Icon name="add" />
-              </FABButton>
-            </Tooltip>
-          </div>
-        ) : null}
+        ) : (
+          <CardList />
+        )}
       </div>
     )
   }
@@ -52,7 +43,6 @@ class Cards extends PureComponent {
 export default connect(state => ({
   isCreateOpen: isCreateOpen(state),
 }), {
-  createOpen: actions.createOpen,
   createClose: actions.createClose,
   createRequested: actions.createRequested,
 })(Cards)

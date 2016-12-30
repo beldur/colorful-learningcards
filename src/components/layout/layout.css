@@ -58,3 +58,10 @@
 	text-align: center;
 	margin-top: 5vh;
 }
+
+.page-action-button {
+	position: absolute;
+	bottom: 80px;
+	right: 40px;
+	z-index: 99;
+}
