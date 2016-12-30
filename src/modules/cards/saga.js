@@ -48,10 +48,12 @@ export function* cardListFlow(): Generator<*,*,*> {
     const user = yield select(authSelectors.getUser)
     const userCardsRef = database.ref(`cards/${user.uid}`)
 
+    yield(put(actions.setBusy(true)))
     const cards = yield new Promise((resolve, reject) => {
       userCardsRef.on('value', (data) => resolve(data.val()))
     })
 
+    yield put(actions.setBusy(false))
     yield put(actions.addCards(cards))
 
     yield call([userCardsRef, userCardsRef.on], 'child_changed', (data) => {

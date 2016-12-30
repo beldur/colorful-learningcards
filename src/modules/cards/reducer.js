@@ -10,6 +10,7 @@ export const CREATE_SUCCESS = `${NAME}/CREATE_CARD_SUCCESS`
 export const CREATE_FAILURE = `${NAME}/CREATE_CARD_FAILURE`
 export const CHANGE_CARD = `${NAME}/CHANGE_CARD`
 export const ADD_CARDS = `${NAME}/ADD_CARDS`
+export const SET_BUSY = `${NAME}/SET_BUSY`
 
 const initialState: CardsState = {
   createOpen: false,
@@ -25,6 +26,10 @@ const getSortedKeysByCreatedAt = (cards: CardList) => {
 }
 
 const ACTION_HANDLERS: ActionHandlers<CardsState> = {
+  [SET_BUSY]: (state, { busy }) => ({
+    ...state,
+    busy,
+  }),
   [CREATE_OPEN]: (state) => ({
     ...state,
     createOpen: true,
@@ -110,4 +115,9 @@ export const changeCard = (key: CardKey, card: Card): Action => ({
 export const addCards = (cards: CardList): Action => ({
   type: ADD_CARDS,
   payload: { cards },
+})
+
+export const setBusy = (busy: boolean): Action => ({
+  type: SET_BUSY,
+  payload: { busy },
 })
