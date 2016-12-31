@@ -8,9 +8,11 @@ export const CREATE_CLOSE = `${NAME}/CREATE_CLOSE`
 export const CREATE_REQUESTED = `${NAME}/CREATE_CARD_REQUESTED`
 export const CREATE_SUCCESS = `${NAME}/CREATE_CARD_SUCCESS`
 export const CREATE_FAILURE = `${NAME}/CREATE_CARD_FAILURE`
-export const CHANGE_CARD = `${NAME}/CHANGE_CARD`
+export const CHANGED_CARD = `${NAME}/CHANGED_CARD`
+export const REMOVED_CARD = `${NAME}/REMOVED_CARD`
 export const ADD_CARDS = `${NAME}/ADD_CARDS`
 export const SET_BUSY = `${NAME}/SET_BUSY`
+export const DELETE_CARD = `${NAME}/DELETE_CARD`
 
 const initialState: CardsState = {
   createOpen: false,
@@ -50,11 +52,24 @@ const ACTION_HANDLERS: ActionHandlers<CardsState> = {
     ...state,
     busy: false,
   }),
-  [CHANGE_CARD]: (state, { key, card }) => {
+  [CHANGED_CARD]: (state, { key, card }) => {
     const byKey = {
       ...state.byKey,
       [key]: card,
     }
+
+    return {
+      ...state,
+      sortedByCreatedAt: getSortedKeysByCreatedAt(byKey),
+      byKey,
+    }
+  },
+  [REMOVED_CARD]: (state, { key, card }) => {
+    const byKey = {
+      ...state.byKey,
+    }
+
+    delete byKey[key]
 
     return {
       ...state,
@@ -107,8 +122,8 @@ export const createSuccess = (): Action => ({
   payload: { },
 })
 
-export const changeCard = (key: CardKey, card: Card): Action => ({
-  type: CHANGE_CARD,
+export const changedCard = (key: CardKey, card: Card): Action => ({
+  type: CHANGED_CARD,
   payload: { key, card },
 })
 
@@ -120,4 +135,14 @@ export const addCards = (cards: CardList): Action => ({
 export const setBusy = (busy: boolean): Action => ({
   type: SET_BUSY,
   payload: { busy },
+})
+
+export const deleteCard = (key: CardKey): Action => ({
+  type: DELETE_CARD,
+  payload: { key },
+})
+
+export const removedCard = (key: CardKey, card: Card): Action => ({
+  type: REMOVED_CARD,
+  payload: { key },
 })

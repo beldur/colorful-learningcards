@@ -1,5 +1,7 @@
 // @flow
 
+import type { Action } from 'types'
+
 import { channel } from 'redux-saga'
 import { takeLatest, take, race, put, select, call, spawn } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'connected-react-router'
@@ -11,7 +13,8 @@ import { show as showSnackbar } from 'modules/snackbar/reducer'
 
 const { database, TIMESTAMP } = initFirebase()
 
-export function* createCardFlow(): Generator<*,*,*> {
+// createCardFlow defines what happens when the create card view is open
+export function* createCardFlow(): Generator<*, *, *> {
   const { createRequested, locationChange } = yield race({
     createRequested: take(actions.CREATE_REQUESTED),
     locationChange: take(LOCATION_CHANGE),
@@ -41,11 +44,14 @@ export function* createCardFlow(): Generator<*,*,*> {
   }
 }
 
-export function* cardListFlow(): Generator<*,*,*> {
+export function* loadCardsFlow(): Generator<*, *, *> {
+  yield take(authActions.STATE_CHANGED)
+
   const isAuthenticated = yield select(authSelectors.isAuthenticated)
 
   if (isAuthenticated) {
     const cardChangedChannel = channel()
+    const cardRemovedChannel = channel()
     const user = yield select(authSelectors.getUser)
     const userCardsRef = database.ref(`cards/${user.uid}`)
 
@@ -54,23 +60,46 @@ export function* cardListFlow(): Generator<*,*,*> {
       userCardsRef.on('value', (data) => resolve(data.val()))
     })
 
-    yield put(actions.setBusy(false))
     yield put(actions.addCards(cards))
+    yield put(actions.setBusy(false))
 
     yield call([userCardsRef, userCardsRef.on], 'child_changed', (data) => {
-      cardChangedChannel.put(actions.changeCard(data.key, data.val()))
+      cardChangedChannel.put(actions.changedCard(data.key, data.val()))
     })
 
+    yield call([userCardsRef, userCardsRef.on], 'child_removed', (data) => {
+      cardRemovedChannel.put(actions.removedCard(data.key, data.val()))
+    })
+
+    // Listen for card changes
     while(true) {
-      const changedCard = yield take(cardChangedChannel)
-      yield put(changedCard)
+      const { changedCard, removedCard } = yield race({
+        changedCard: take(cardChangedChannel),
+        removedCard: take(cardRemovedChannel),
+      })
+
+      if (changedCard) {
+        yield put(changedCard)
+      } else if (removedCard) {
+        yield put(removedCard)
+      }
     }
   }
 }
 
-export default function* saga(): Generator<*,*,*> {
+export function* deleteCardFlow({ payload }: Action): Generator<*, *, *> {
+  const { key } = payload
+
+  const user = yield select(authSelectors.getUser)
+  const userCardsRef = database.ref(`cards/${user.uid}/${key}`)
+
+  yield call([userCardsRef, userCardsRef.remove])
+}
+
+export default function* saga(): Generator<*, *, *> {
   yield [
     takeLatest(actions.CREATE_OPEN, createCardFlow),
-    takeLatest(authActions.STATE_CHANGED, cardListFlow),
+    loadCardsFlow(),
+    takeLatest(actions.DELETE_CARD, deleteCardFlow),
   ]
 }
