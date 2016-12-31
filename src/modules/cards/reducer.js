@@ -20,7 +20,7 @@ const initialState: CardsState = {
 }
 
 const getSortedKeysByCreatedAt = (cards: CardList) => {
-    const byCreatedAt = (a: [CardKey, Card], b: [CardKey, Card]) => a[1].createdAt > b[1].createdAt ? -1 : 1
+    const byCreatedAt = (a: [CardKey, any], b: [CardKey, any]) => a[1].createdAt > b[1].createdAt ? -1 : 1
 
     return Object.entries(cards).sort(byCreatedAt).map(([key]) => key)
 }

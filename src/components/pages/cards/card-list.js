@@ -4,19 +4,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import * as selectors from 'modules/cards/selectors'
-
-const Card = connect((state, ownProps) => ({
-  card: selectors.getCardByKey(state, ownProps.id)
-}))(({ card }) => {
-  return (
-    <div>
-      Color: {card.color}<br/>
-      Front: {card.front}<br/>
-      Back: {card.back}
-      <hr/>
-    </div>
-  )
-})
+import Card from './card'
 
 type CardListProps = {
   cardList: Array<string>,

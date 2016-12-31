@@ -46,7 +46,7 @@ class Layout extends Component {
     }
   }
 
-  handleScroll(event) {
+  handleScroll = (event) => {
     this.setState({ scroll: event.target.scrollTop })
   }
 
@@ -59,7 +59,7 @@ class Layout extends Component {
       <MdlLayout fixedHeader fixedTabs>
         <Content
           className="mdl-color--grey-100 mdl-color-text--grey-700"
-          onScroll={e => this.handleScroll(e)}
+          onScroll={this.handleScroll}
         >
           <Header
             isAuthenticated={isAuthenticated}

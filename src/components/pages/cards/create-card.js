@@ -44,11 +44,11 @@ class CreateCard extends Component {
     this.setState({ color })
   }
 
-  handleFrontChange(event: SyntheticInputEvent) {
+  handleFrontChange = (event: SyntheticInputEvent) => {
     this.setState({ front: event.target.value })
   }
 
-  handleBackChange(event: SyntheticInputEvent) {
+  handleBackChange = (event: SyntheticInputEvent) => {
     this.setState({ back: event.target.value })
   }
 
@@ -67,22 +67,23 @@ class CreateCard extends Component {
       <div className="create-card">
         <MdlCard shadow={2}>
           <CardTitle>
-            {Object.keys(COLORS).map(c =>
+            {/* $FlowFixMe */}
+            {Object.keys(COLORS).map((c: Color) =>
               <FABButton
-                className={`mdl-color--${c} mdl-color-text--white`}
-                onClick={() => this.handleColorClick(COLORS[c])}
+                className={`mdl-color--${COLORS[c]} mdl-color-text--white`}
+                onClick={() => this.handleColorClick(c)}
                 key={c}
                 ripple
                 mini
               >
-                {color === COLORS[c] ? <Icon name="check" /> : null}
+                {color === c ? <Icon name="check" /> : null}
               </FABButton>
             )}
           </CardTitle>
           <CardText>
             <div className="create-card--input">
               <Textfield
-                onChange={e => this.handleFrontChange(e)}
+                onChange={this.handleFrontChange}
                 label="Front Text"
                 floatingLabel
                 value={front}
@@ -92,7 +93,7 @@ class CreateCard extends Component {
                 label="Back Text"
                 floatingLabel
                 value={back}
-                onChange={e => this.handleBackChange(e)}
+                onChange={this.handleBackChange}
                 required
               />
             </div>

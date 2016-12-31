@@ -30,3 +30,54 @@
     justify-content: center;
     align-items: center;
 }
+
+.card-list .card {
+	margin: 0 auto 1em auto;
+	width: 60vw;
+	height: 30vw;
+	position: relative;
+	perspective: 1000px;
+}
+
+.card-list .card .mdl-card {
+	width: 100%;
+	height: 100%;
+	min-height: auto;
+	overflow: visible;
+
+	transform-style: preserve-3d;
+	transition: 0.5s;
+	position: relative;
+}
+
+.card-list .card.flipped .mdl-card {
+	transform: rotateY(180deg);
+}
+
+.card-list .card .front,
+.card-list .card .back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+
+	backface-visibility: hidden;
+}
+
+.card-list .card p {
+	font-size: 8vw;
+	margin: 0;
+}
+
+.card-list .card .front {
+	z-index: 2;
+}
+
+.card-list .card .back {
+	transform: rotateY(180deg);
+}

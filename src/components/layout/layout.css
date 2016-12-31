@@ -15,6 +15,7 @@
 .mdl-layout .mdl-layout__header.fixed .mdl-layout__tab-bar {
 	position: fixed;
 	top: 0;
+	z-index: 2;
 }
 
 .mdl-layout .mdl-layout__tab-bar {

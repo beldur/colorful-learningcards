@@ -10,12 +10,12 @@ export type User = {
 }
 
 export type Color =
-  | 1 //'blue'
-  | 2 //'orange'
-  | 3 //'red'
-  | 4 //'green'
-  | 5 //'cyan'
-  | 6 //'purple'
+  | '1' //'blue'
+  | '2' //'orange'
+  | '3' //'red'
+  | '4' //'green'
+  | '5' //'cyan'
+  | '6' //'purple'
 
 export type CardKey = string
 

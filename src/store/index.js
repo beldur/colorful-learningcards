@@ -33,9 +33,9 @@ export default (initialState: Object = {}, history: Object) => {
 
   // if (module.hot) {
   //   module.hot.accept('./reducers', () => {
-  //     console.log('replace Reducer')
   //     const reducers = require('./reducers').default
-  //     store.replaceReducer(reducers)
+  //     console.log('replace Reducer', reducers)
+  //     store.replaceReducer(connectRouter(history)(reducers))
   //   })
   // }
 
