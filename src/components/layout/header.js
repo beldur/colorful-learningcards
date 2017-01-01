@@ -35,7 +35,7 @@ class Header extends PureComponent {
           {isAuthenticated ? (
             <Tooltip label="Sign out">
               <img
-                src={user.photoURL}
+                src={`${user.photoURL}?sz=64`}
                 role="presentation"
                 className="user-image"
                 onClick={logout}
