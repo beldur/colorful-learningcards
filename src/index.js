@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
+import ReactGA from 'react-ga'
 import createStore from './store'
 import Routes from './routing/routes'
 import { initialize as initFirebase } from './modules/firebase'
@@ -19,6 +20,8 @@ import 'react-mdl/extra/material.css'
 import 'react-mdl/extra/material'
 
 import './index.css'
+
+ReactGA.initialize('UA-89643287-1')
 
 const history = createBrowserHistory()
 const store = createStore({}, history)
