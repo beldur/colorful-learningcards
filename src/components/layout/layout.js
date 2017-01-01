@@ -13,7 +13,7 @@ import { isSnackbarVisible, getSnackbarText } from 'modules/snackbar/selectors'
 import { getLocation } from 'routing/selectors'
 import { logout } from 'modules/auth/reducer'
 import { MatchWhenAuthorized } from 'routing/routes'
-import CreateCardButton from '../pages/cards/create-card-button'
+import CardActionButton from '../pages/cards/card-action-button'
 import Header from './header'
 
 import './layout.css'
@@ -82,7 +82,7 @@ class Layout extends Component {
           pattern='/cards'
           isAuthenticated={isAuthenticated}
           exactly
-          component={CreateCardButton}
+          component={CardActionButton}
         />
 
         <Footer size="mini">

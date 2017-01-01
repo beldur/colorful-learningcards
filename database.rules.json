@@ -11,7 +11,7 @@
             ".validate": "newData.isNumber() && newData.val() == now"
           },
           "color": {
-            ".validate": "newData.isNumber()"
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 32"
           },
           "front": {
             ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 255"

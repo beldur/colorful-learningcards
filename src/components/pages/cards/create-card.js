@@ -27,7 +27,7 @@ class CreateCard extends Component {
   state: CreateCardState
 
   static defaultProps = {
-    initialColor: 1,
+    initialColor: '1',
   }
 
   constructor(props: CreateCardProps) {

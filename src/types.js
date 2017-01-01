@@ -69,7 +69,8 @@ export type CardsState = {
   createOpen: boolean,
   busy: boolean,
   byKey: CardList,
-  sortedByCreatedAt: Array<string>,
+  sortedByCreatedAt: Array<CardKey>,
+  selected: Array<CardKey>,
 }
 
 export type SnackbarState = {

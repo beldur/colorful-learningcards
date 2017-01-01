@@ -1,0 +1,77 @@
+.card {
+	margin: 0 auto 1em auto;
+	width: 60vw;
+	height: 30vw;
+	position: relative;
+	perspective: 1000px;
+	user-select: none;
+}
+
+.card .mdl-card {
+	width: 100%;
+	height: 100%;
+	min-height: auto;
+	overflow: visible;
+
+	transform-style: preserve-3d;
+	transition: 0.5s;
+	position: relative;
+}
+
+.card.flipped .mdl-card {
+	transform: rotateX(180deg);
+}
+
+.card .front,
+.card .back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+
+	backface-visibility: hidden;
+}
+
+.card p {
+	font-size: 8vw;
+	margin: 0;
+}
+
+.card .front {
+	z-index: 2;
+}
+
+.card .back {
+	transform: rotateX(180deg);
+}
+
+.card .delete {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 2;
+	color: white;
+}
+
+.card .selected-icon {
+	position: absolute;
+	top: 7px;
+	right: 7px;
+	transform: scale(0);
+	border-radius: 50%;
+	z-index: 9;
+	padding: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.320, 1.475); /* ease-out-back */
+}
+
+.card.selected .selected-icon {
+	transform: scale(1);
+}

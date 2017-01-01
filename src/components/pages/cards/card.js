@@ -4,10 +4,12 @@ import type { Card, CardKey } from 'types'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card as MdlCard, IconButton } from 'react-mdl'
+import { Card as MdlCard, Icon } from 'react-mdl'
 import * as selectors from 'modules/cards/selectors'
 import * as actions from 'modules/cards/reducer'
 import { COLORS, TEXT_COLOR } from 'modules/cards/constants'
+
+import './card.css'
 
 type CardState = {
   isFlipped: boolean,
@@ -16,7 +18,10 @@ type CardState = {
 type CardProps = {
   card: Card,
   id: CardKey,
-  deleteCard: (key: CardKey) => void,
+  isSelected: boolean,
+  hasSelectedCards: boolean,
+  deleteCards: (key: Array<CardKey>) => void,
+  updateSelected: (key: CardKey, selected: boolean) => void,
 }
 
 class CardComponent extends Component {
@@ -35,16 +40,34 @@ class CardComponent extends Component {
     this.setState({ isFlipped: !this.state.isFlipped })
   }
 
+  handleCardClick = (e) => {
+    const { id, updateSelected, isSelected, hasSelectedCards } = this.props
+
+    if (hasSelectedCards) {
+      updateSelected(id, !isSelected)
+    } else {
+      this.toggleFlip()
+    }
+  }
+
+  handleCardContextMenu = (e) => {
+    const { id, updateSelected, isSelected } = this.props
+
+    e.preventDefault();
+    updateSelected(id, !isSelected)
+  }
+
   render() {
-    const { card, deleteCard, id } = this.props
+    const { card, isSelected } = this.props
     const { isFlipped } = this.state
 
     return (
-      <div className={`card ${isFlipped ? 'flipped' : ''}`}>
+      <div className={`card ${isFlipped ? 'flipped' : ''} ${isSelected ? 'selected': ''}`}>
         <MdlCard
           className={`mdl-color--${COLORS[card.color]} mdl-color-text--${TEXT_COLOR[card.color]}`}
           shadow={2}
-          onClick={this.toggleFlip}
+          onClick={this.handleCardClick}
+          onContextMenuCapture={this.handleCardContextMenu}
         >
             <div className="front">
               <p>{card.front}</p>
@@ -53,7 +76,10 @@ class CardComponent extends Component {
               <p>{card.back}</p>
             </div>
         </MdlCard>
-        <IconButton name="delete" onClick={() => deleteCard(id)} className="delete"></IconButton>
+        <Icon
+          name="check"
+          className="selected-icon mdl-color-text--white mdl-color--blue"
+        />
       </div>
     )
   }
@@ -61,6 +87,8 @@ class CardComponent extends Component {
 
 export default connect((state, ownProps) => ({
   card: selectors.getCardByKey(state, ownProps.id),
+  isSelected: selectors.isSelected(state, ownProps.id),
+  hasSelectedCards: selectors.hasSelectedCards(state),
 }), {
-  deleteCard: actions.deleteCard,
+  updateSelected: actions.updateSelected,
 })(CardComponent)

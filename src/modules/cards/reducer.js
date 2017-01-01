@@ -8,23 +8,40 @@ export const CREATE_CLOSE = `${NAME}/CREATE_CLOSE`
 export const CREATE_REQUESTED = `${NAME}/CREATE_CARD_REQUESTED`
 export const CREATE_SUCCESS = `${NAME}/CREATE_CARD_SUCCESS`
 export const CREATE_FAILURE = `${NAME}/CREATE_CARD_FAILURE`
+export const SET_BUSY = `${NAME}/SET_BUSY`
+export const ADD_CARDS = `${NAME}/ADD_CARDS`
+export const DELETE_CARDS = `${NAME}/DELETE_CARDS`
+export const UPDATE_SELECTED = `${NAME}/UPDATE_SELECTED`
+// Firebase events
 export const CHANGED_CARD = `${NAME}/CHANGED_CARD`
 export const REMOVED_CARD = `${NAME}/REMOVED_CARD`
-export const ADD_CARDS = `${NAME}/ADD_CARDS`
-export const SET_BUSY = `${NAME}/SET_BUSY`
-export const DELETE_CARD = `${NAME}/DELETE_CARD`
+export const ADDED_CARD = `${NAME}/ADDED_CARD`
 
 const initialState: CardsState = {
   createOpen: false,
   busy: false,
   sortedByCreatedAt: [],
   byKey: { },
+  selected: [],
 }
 
 const getSortedKeysByCreatedAt = (cards: CardList) => {
     const byCreatedAt = (a: [CardKey, any], b: [CardKey, any]) => a[1].createdAt > b[1].createdAt ? -1 : 1
 
     return Object.entries(cards).sort(byCreatedAt).map(([key]) => key)
+}
+
+const updateStateWithCard = (state, { key, card }) => {
+  const byKey = {
+    ...state.byKey,
+    [key]: card,
+  }
+
+  return {
+    ...state,
+    sortedByCreatedAt: getSortedKeysByCreatedAt(byKey),
+    byKey,
+  }
 }
 
 const ACTION_HANDLERS: ActionHandlers<CardsState> = {
@@ -52,18 +69,8 @@ const ACTION_HANDLERS: ActionHandlers<CardsState> = {
     ...state,
     busy: false,
   }),
-  [CHANGED_CARD]: (state, { key, card }) => {
-    const byKey = {
-      ...state.byKey,
-      [key]: card,
-    }
-
-    return {
-      ...state,
-      sortedByCreatedAt: getSortedKeysByCreatedAt(byKey),
-      byKey,
-    }
-  },
+  [CHANGED_CARD]: updateStateWithCard,
+  [ADDED_CARD]: updateStateWithCard,
   [REMOVED_CARD]: (state, { key, card }) => {
     const byKey = {
       ...state.byKey,
@@ -74,6 +81,7 @@ const ACTION_HANDLERS: ActionHandlers<CardsState> = {
     return {
       ...state,
       sortedByCreatedAt: getSortedKeysByCreatedAt(byKey),
+      selected: state.selected.filter(k => !!byKey[k]),
       byKey,
     }
   },
@@ -89,6 +97,10 @@ const ACTION_HANDLERS: ActionHandlers<CardsState> = {
       byKey,
     }
   },
+  [UPDATE_SELECTED]: (state, { key, selected }) => ({
+    ...state,
+    selected: selected ? state.selected.concat([key]) : state.selected.filter(k => k !== key),
+  }),
 }
 
 export default function reducer(state: CardsState = initialState, action: Action) {
@@ -122,11 +134,6 @@ export const createSuccess = (): Action => ({
   payload: { },
 })
 
-export const changedCard = (key: CardKey, card: Card): Action => ({
-  type: CHANGED_CARD,
-  payload: { key, card },
-})
-
 export const addCards = (cards: CardList): Action => ({
   type: ADD_CARDS,
   payload: { cards },
@@ -137,12 +144,27 @@ export const setBusy = (busy: boolean): Action => ({
   payload: { busy },
 })
 
-export const deleteCard = (key: CardKey): Action => ({
-  type: DELETE_CARD,
-  payload: { key },
+export const deleteCards = (keys: Array<CardKey>): Action => ({
+  type: DELETE_CARDS,
+  payload: { keys },
+})
+
+export const changedCard = (key: CardKey, card: Card): Action => ({
+  type: CHANGED_CARD,
+  payload: { key, card },
 })
 
 export const removedCard = (key: CardKey, card: Card): Action => ({
   type: REMOVED_CARD,
   payload: { key },
+})
+
+export const addedCard = (key: CardKey, card: Card): Action => ({
+  type: ADDED_CARD,
+  payload: { key, card },
+})
+
+export const updateSelected = (key: CardKey, selected: boolean): Action => ({
+  type: UPDATE_SELECTED,
+  payload: { key, selected },
 })

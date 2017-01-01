@@ -9,6 +9,8 @@ import * as actions from './reducer'
 import { initialize as initFirebase } from '../firebase'
 import * as authSelectors from 'modules/auth/selectors'
 import * as authActions from 'modules/auth/reducer'
+import * as cardSelectors from 'modules/cards/selectors'
+import * as cardActions from 'modules/cards/reducer'
 import { show as showSnackbar } from 'modules/snackbar/reducer'
 
 const { database, TIMESTAMP } = initFirebase()
@@ -50,8 +52,7 @@ export function* loadCardsFlow(): Generator<*, *, *> {
   const isAuthenticated = yield select(authSelectors.isAuthenticated)
 
   if (isAuthenticated) {
-    const cardChangedChannel = channel()
-    const cardRemovedChannel = channel()
+    const cardEventChannel = channel()
     const user = yield select(authSelectors.getUser)
     const userCardsRef = database.ref(`cards/${user.uid}`)
 
@@ -64,42 +65,54 @@ export function* loadCardsFlow(): Generator<*, *, *> {
     yield put(actions.setBusy(false))
 
     yield call([userCardsRef, userCardsRef.on], 'child_changed', (data) => {
-      cardChangedChannel.put(actions.changedCard(data.key, data.val()))
+      cardEventChannel.put(actions.changedCard(data.key, data.val()))
     })
 
     yield call([userCardsRef, userCardsRef.on], 'child_removed', (data) => {
-      cardRemovedChannel.put(actions.removedCard(data.key, data.val()))
+      cardEventChannel.put(actions.removedCard(data.key, data.val()))
+    })
+
+    yield call([userCardsRef, userCardsRef.on], 'child_added', (data) => {
+      cardEventChannel.put(actions.addedCard(data.key, data.val()))
     })
 
     // Listen for card changes
     while(true) {
-      const { changedCard, removedCard } = yield race({
-        changedCard: take(cardChangedChannel),
-        removedCard: take(cardRemovedChannel),
-      })
+      const cardEventAction = yield take(cardEventChannel)
 
-      if (changedCard) {
-        yield put(changedCard)
-      } else if (removedCard) {
-        yield put(removedCard)
+      // When event is 'ADDED_CARD' first check if we have it already in our store.
+      // Firebase triggers 'child_added' even for existing cards
+      if (cardEventAction.type === cardActions.ADDED_CARD) {
+        const { key } = cardEventAction.payload
+        const hasCard = yield select(cardSelectors.hasCardByKey, key)
+
+        if (!hasCard) {
+          yield put(cardEventAction)
+        }
+      } else {
+        yield put(cardEventAction)
       }
     }
   }
 }
 
+// deleteCardsFlow takes a list of `CardKey`s and deletes them in firebase
 export function* deleteCardFlow({ payload }: Action): Generator<*, *, *> {
-  const { key } = payload
+  const { keys } = payload
 
   const user = yield select(authSelectors.getUser)
-  const userCardsRef = database.ref(`cards/${user.uid}/${key}`)
+  const userCardsRef = database.ref()
+  const deletes = {}
 
-  yield call([userCardsRef, userCardsRef.remove])
+  keys.forEach(key => deletes[`cards/${user.uid}/${key}`] = null)
+
+  yield call([userCardsRef, userCardsRef.update], deletes)
 }
 
 export default function* saga(): Generator<*, *, *> {
   yield [
     takeLatest(actions.CREATE_OPEN, createCardFlow),
+    takeLatest(actions.DELETE_CARDS, deleteCardFlow),
     loadCardsFlow(),
-    takeLatest(actions.DELETE_CARD, deleteCardFlow),
   ]
 }
