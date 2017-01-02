@@ -26,7 +26,6 @@ export function* createCardFlow(): Generator<*, *, *> {
     yield put(actions.createClose())
   } else if (createRequested) {
     const { payload: { card } } = createRequested
-    card.color = parseInt(card.color, 10)
 
     try {
       const { uid } = yield select(authSelectors.getUser)
