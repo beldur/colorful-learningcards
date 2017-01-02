@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Spinner } from 'react-mdl'
+import { Spinner, Grid, Cell } from 'react-mdl'
 import * as selectors from 'modules/cards/selectors'
 import Card from './card'
 
@@ -19,11 +19,15 @@ class CardList extends PureComponent {
 
     return (
       <div className="card-list">
-        {isBusy ? (
-          <div className="loading"><Spinner /></div>
-        ) : (
-          cardList.map(key => <Card key={key} id={key} />)
-        )}
+        <Grid>
+          {isBusy ? (
+            <Cell col={12}><div className="loading"><Spinner /></div></Cell>
+          ) : (
+            cardList.map(key => (
+              <Cell col={4} key={key}><Card id={key} /></Cell>
+            ))
+          )}
+        </Grid>
       </div>
     )
   }
