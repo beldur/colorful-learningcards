@@ -4,15 +4,28 @@
 	transition: padding 0.4s;
 }
 
+.card p {
+	font-size: 8vw;
+	margin: 0;
+}
+
 @media (max-width: 839px) and (min-width: 480px) {
 	.card-list .mdl-cell {
 		padding-bottom: 30%;
+	}
+
+	.card p {
+		font-size: 6vw;
 	}
 }
 
 @media (min-width: 840px) {
 	.card-list .mdl-cell {
 		padding-bottom: 25%;
+	}
+
+	.card p {
+		font-size: 4vw;
 	}
 }
 
@@ -52,11 +65,6 @@
 	align-items: center;
 
 	backface-visibility: hidden;
-}
-
-.card p {
-	font-size: 8vw;
-	margin: 0;
 }
 
 .card .front {
