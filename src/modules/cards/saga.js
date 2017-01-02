@@ -46,8 +46,6 @@ export function* createCardFlow(): Generator<*, *, *> {
 }
 
 export function* loadCardsFlow(): Generator<*, *, *> {
-  yield take(authActions.STATE_CHANGED)
-
   const isAuthenticated = yield select(authSelectors.isAuthenticated)
 
   if (isAuthenticated) {
@@ -112,6 +110,6 @@ export default function* saga(): Generator<*, *, *> {
   yield [
     takeLatest(actions.CREATE_OPEN, createCardFlow),
     takeLatest(actions.DELETE_CARDS, deleteCardFlow),
-    loadCardsFlow(),
+    takeLatest(authActions.STATE_CHANGED, loadCardsFlow),
   ]
 }
