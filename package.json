@@ -2,7 +2,7 @@
   "name": "colorful-learningcards",
   "version": "0.1.0",
   "description": "An app that lets you learn vocabulary with colorful cards.",
-  "homepage": "https://colorful-learningcards.firebaseapp.com",
+  "homepage": "https://colorful-learningcards.org",
   "repository": {
     "type": "git",
     "url": "https://github.com/beldur/colorful-learningcards.git"
