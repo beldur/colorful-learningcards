@@ -89,8 +89,8 @@ class Layout extends Component {
           <FooterSection>
             <div className="mdl-logo mdl-cell--hide-phone mdl-cell--hide-tablet">Colorful Learningcards</div>
             <FooterLinkList>
-              <Link to="/">Home</Link>
-              <Link to="/about">About</Link>
+              <Link to="/" className={`${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+              <Link to="/about" className={`${location.pathname === '/about' ? 'active' : ''}`}>About</Link>
             </FooterLinkList>
           </FooterSection>
         </Footer>

@@ -39,6 +39,11 @@
     transition: line-height 0.5s;
 }
 
+.mdl-layout .mdl-mini-footer .active {
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.9);
+}
+
 .page-content {
 	max-width: 860px;
 }

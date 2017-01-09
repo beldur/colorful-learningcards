@@ -1,0 +1,14 @@
+.headline {
+	text-align: center;
+}
+
+.headline em {
+	font-size: 50%;
+}
+
+.user-photo {
+	margin: 1em auto 0 auto;
+	border: 2px solid black;
+	border-radius: 50%;
+	display: block;
+}
