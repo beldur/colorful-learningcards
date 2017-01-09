@@ -1,4 +1,4 @@
-.card-list .mdl-cell {
+.card-wrapper {
 	padding-bottom: 45%;
 	position: relative;
 	transition: padding 0.4s;
@@ -10,8 +10,8 @@
 }
 
 @media (max-width: 839px) and (min-width: 480px) {
-	.card-list .mdl-cell {
-		padding-bottom: 30%;
+	.card-wrapper {
+		padding-bottom: 50%;
 	}
 
 	.card p {
@@ -20,8 +20,8 @@
 }
 
 @media (min-width: 840px) {
-	.card-list .mdl-cell {
-		padding-bottom: 25%;
+	.card-wrapper {
+		padding-bottom: 60%;
 	}
 
 	.card p {

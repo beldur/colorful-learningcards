@@ -62,24 +62,26 @@ class CardComponent extends Component {
     const { isFlipped } = this.state
 
     return (
-      <div className={`card ${isFlipped ? 'flipped' : ''} ${isSelected ? 'selected': ''}`}>
-        <MdlCard
-          className={`mdl-color--${COLORS[card.color]} mdl-color-text--${TEXT_COLOR[card.color]}`}
-          shadow={2}
-          onClick={this.handleCardClick}
-          onContextMenuCapture={this.handleCardContextMenu}
-        >
-            <div className="front">
-              <p>{card.front}</p>
-            </div>
-            <div className="back">
-              <p>{card.back}</p>
-            </div>
-        </MdlCard>
-        <Icon
-          name="check"
-          className="selected-icon mdl-color-text--white mdl-color--blue"
-        />
+      <div className="card-wrapper">
+        <div className={`card ${isFlipped ? 'flipped' : ''} ${isSelected ? 'selected': ''}`}>
+          <MdlCard
+            className={`mdl-color--${COLORS[card.color]} mdl-color-text--${TEXT_COLOR[card.color]}`}
+            shadow={2}
+            onClick={this.handleCardClick}
+            onContextMenuCapture={this.handleCardContextMenu}
+          >
+              <div className="front">
+                <p>{card.front}</p>
+              </div>
+              <div className="back">
+                <p>{card.back}</p>
+              </div>
+          </MdlCard>
+          <Icon
+            name="check"
+            className="selected-icon mdl-color-text--white mdl-color--blue"
+          />
+        </div>
       </div>
     )
   }

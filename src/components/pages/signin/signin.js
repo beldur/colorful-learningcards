@@ -22,11 +22,11 @@ class SignIn extends PureComponent {
     return (
       <div>
         <h4>Select Sign In method</h4>
-            <Card shadow={2} className="signin-card">
-              <CardText>
-                <div ref={c => this.firebaseUiElement = c}></div>
-              </CardText>
-            </Card>
+          <Card shadow={2} className="signin-card">
+            <CardText>
+              <div ref={c => this.firebaseUiElement = c}></div>
+            </CardText>
+          </Card>
       </div>
     )
   }
