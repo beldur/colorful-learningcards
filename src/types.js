@@ -78,9 +78,14 @@ export type SnackbarState = {
   text: string,
 }
 
+export type LearnState = {
+  nextCardKey: ?CardKey,
+}
+
 export type AppState = {
   router: RouterState,
   auth: AuthState,
   cards: CardsState,
   snackbar: SnackbarState,
+  learn: LearnState,
 }
