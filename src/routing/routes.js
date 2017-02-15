@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Match, Miss, Redirect } from 'react-router'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { Home, About, Layout, SignIn, Cards, Learn } from 'components/index'
 import { isAuthenticated } from 'modules/auth/selectors'
@@ -11,8 +11,8 @@ type RoutesProps = {
   isAuthenticated: boolean,
 }
 
-export const MatchWhenAuthorized = ({ isAuthenticated, component: Component, redirect, ...rest }: Object) =>
-  <Match {...rest} render={props => (
+export const RouteWhenAuthorized = ({ isAuthenticated, component: Component, redirect, ...rest }: Object) =>
+  <Route {...rest} render={props => (
     (isAuthenticated) ? (
       <Component {...props} />
     ) : (
@@ -28,24 +28,26 @@ class Routes extends PureComponent {
 
     return (
       <Layout>
-        <Match pattern='/' component={Home} exactly />
-        <Match pattern='/about' component={About} exactly />
-        <Match pattern='/signin' component={SignIn} exactly />
-        <MatchWhenAuthorized
-          pattern='/cards'
-          component={Cards}
-          exactly
-          isAuthenticated={isAuthenticated}
-          redirect
-        />
-        <MatchWhenAuthorized
-          pattern='/learn'
-          component={Learn}
-          exactly
-          isAuthenticated={isAuthenticated}
-          redirect
-        />
-        <Miss component={() => <Redirect to='/' />} />
+        <Switch>
+          <Route path='/' component={Home} exact />
+          <Route path='/about' component={About} exact />
+          <Route path='/signin' component={SignIn} exact />
+          <RouteWhenAuthorized
+            path='/cards'
+            component={Cards}
+            exact
+            isAuthenticated={isAuthenticated}
+            redirect
+          />
+          <RouteWhenAuthorized
+            path='/learn'
+            component={Learn}
+            exact
+            isAuthenticated={isAuthenticated}
+            redirect
+          />
+          <Route path='*' component={() => <Redirect to='/' />} />
+        </Switch>
       </Layout>
     )
   }

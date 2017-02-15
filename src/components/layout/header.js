@@ -4,7 +4,7 @@ import type { User, Location } from 'types'
 
 import React, { PureComponent } from 'react'
 import { Header as MdlHeader, Navigation, HeaderRow, Tab, Tooltip } from 'react-mdl'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import RoutedHeaderTabs from './routed-header-tabs'
 

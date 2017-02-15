@@ -4,7 +4,7 @@ import type { User, Location } from 'types'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Layout as MdlLayout, Content, Grid, Cell, Footer, Snackbar,
   FooterSection, FooterLinkList, Spinner } from 'react-mdl'
 
@@ -12,7 +12,7 @@ import { getUser, isAuthenticated, isInitialized } from 'modules/auth/selectors'
 import { isSnackbarVisible, getSnackbarText } from 'modules/snackbar/selectors'
 import { getLocation } from 'routing/selectors'
 import { logout } from 'modules/auth/reducer'
-import { MatchWhenAuthorized } from 'routing/routes'
+import { RouteWhenAuthorized } from 'routing/routes'
 import CardActionButton from '../pages/cards/card-action-button'
 import Header from './header'
 
@@ -32,7 +32,6 @@ type LayoutProps = {
 type LayoutState = {
   scroll: number,
 }
-
 
 class Layout extends Component {
   props: LayoutProps
@@ -78,8 +77,8 @@ class Layout extends Component {
           </Grid>
         </Content>
 
-        <MatchWhenAuthorized
-          pattern='/cards'
+        <RouteWhenAuthorized
+          path='/cards'
           isAuthenticated={isAuthenticated}
           exactly
           component={CardActionButton}
